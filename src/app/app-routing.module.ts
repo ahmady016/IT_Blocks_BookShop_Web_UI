@@ -8,7 +8,7 @@ import { SignUpComponent } from './users/sign-up/sign.up.component';
 import { BookListComponent } from './books/book-list/book.list.component';
 import { BorrowingComponent } from './orders/borrowing/borrowing.component';
 import { PurchaseComponent } from './orders/purchase/purchase.component';
-import { PageNotFoundComponent } from './page-not-found.component';
+import { PageNotFoundComponent } from './page.not.found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
