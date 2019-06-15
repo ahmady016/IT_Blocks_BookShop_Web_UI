@@ -5,3 +5,8 @@ export interface User {
   userPassword: string;
   IsDeleted?: boolean;
 }
+
+export interface AuthUser {
+  user: User
+  accessToken: string
+}

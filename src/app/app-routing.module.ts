@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './services/auth.guard';
+
 import { SignInComponent } from './users/sign-in/sign.in.component';
 import { SignUpComponent } from './users/sign-up/sign.up.component';
 import { BookListComponent } from './books/book-list/book.list.component';
@@ -14,9 +16,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'books', component: BookListComponent },
-  { path: 'purchase', component: PurchaseComponent },
-  { path: 'borrowing', component: BorrowingComponent },
+  { path: 'books', component: BookListComponent, canActivate: [AuthGuard]  },
+  { path: 'purchase', component: PurchaseComponent, canActivate: [AuthGuard]  },
+  { path: 'borrowing', component: BorrowingComponent, canActivate: [AuthGuard]  },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -1,0 +1,54 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { User, AuthUser } from '../models/user.model';
+import { env } from '../../environments/environment';
+import LS from '../localStorage';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private currentUserSubject: BehaviorSubject<User>;
+  public $currentUser: Observable<User>;
+
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(LS.get('currentUser'));
+    this.$currentUser = this.currentUserSubject.asObservable();
+  }
+
+  private doLogin(authUser: AuthUser) {
+    // login successful if there's a jwt token in the response
+    if (authUser && authUser.accessToken) {
+      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      LS.set('currentUser', authUser);
+      this.currentUserSubject.next(authUser.user);
+    }
+  }
+
+  public get currentUser(): User {
+    return this.currentUserSubject.value;
+  }
+
+  login(username: string, password: string) {
+    return this.http.post<AuthUser>(`${env.API_URL}/users/sign-in`, { username, password })
+      .pipe(map(authUser => {
+        this.doLogin(authUser);
+        return authUser;
+      }));
+  }
+
+  register(user: User) {
+    return this.http.post<AuthUser>(`${env.API_URL}/users/sign-up`, user)
+      .pipe(map(authUser => {
+        this.doLogin(authUser);
+        return authUser;
+      }));
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    LS.remove('currentUser');
+    this.currentUserSubject.next(null);
+  }
+}
