@@ -13,16 +13,16 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/books" routerLinkActive="active">Books</a>
         </li>
-        <li class="nav-item" *ngIf="!AuthSrv.currentUser">
+        <li class="nav-item" *ngIf="!authSrv.currentUser">
           <a class="nav-link" routerLink="/sign-in" routerLinkActive="active">SignIn</a>
         </li>
-        <li class="nav-item" *ngIf="!AuthSrv.currentUser">
+        <li class="nav-item" *ngIf="!authSrv.currentUser">
           <a class="nav-link" routerLink="/sign-up" routerLinkActive="active">SignUp</a>
         </li>
       </ul>
     </div>
-    <div *ngIf="AuthSrv.currentUser">
-      <span>Welcome, {{ AuthSrv.currentUser?.email }}</span>
+    <div *ngIf="authSrv.currentUser">
+      <span>Welcome, {{ authSrv.currentUser?.email }}</span>
       <button class="btn btn-outline-warning"
         (click)="$event.preventDefault();signOut();">
         SignOut

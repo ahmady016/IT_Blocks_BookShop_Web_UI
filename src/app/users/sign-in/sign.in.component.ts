@@ -16,7 +16,7 @@ export class SignInComponent implements OnInit {
 	password: FormControl;
 
 	constructor(
-		private AuthSrv: AuthService,
+		private authSrv: AuthService,
 		private router: Router
 	) { }
 
@@ -36,7 +36,7 @@ export class SignInComponent implements OnInit {
 		e.preventDefault();
 		if (this.signInForm.invalid)
 			return;
-		this.AuthSrv.login(this.signInForm.value.email, this.signInForm.value.password)
+		this.authSrv.login(this.signInForm.value.email, this.signInForm.value.password)
 			.subscribe(
 				_ => void this.router.navigate(["/books"]),
 				error => { this.error = true; }

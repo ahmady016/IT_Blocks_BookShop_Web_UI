@@ -9,10 +9,12 @@ import { AuthService } from './../../services/auth.service';
 })
 export class HeaderComponent {
 	title: string = 'IT Blocks BookShop'
-	constructor(private AuthSrv: AuthService,
-		private router: Router) { }
+	constructor(
+		private authSrv: AuthService,
+		private router: Router
+	) { }
 	signOut() {
-		this.AuthSrv.logout();
+		this.authSrv.logout();
 		this.router.navigate(["/sign-in"]);
 	}
 }
