@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { User, AuthUser } from '../models/user.model';
 import { env } from '../../environments/environment';
@@ -30,20 +30,26 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.http.post<AuthUser>(`${env.API_URL}/users/sign-in`, { username, password })
-      .pipe(map(authUser => {
-        this.doLogin(authUser);
-        return authUser;
-      }));
+  login(email: string, password: string) {
+    return this.http.post<AuthUser>(`${env.API_URL}/users/sign-in`, { email, password })
+      .pipe(
+        map(authUser => {
+          this.doLogin(authUser);
+          return authUser;
+        }),
+        catchError(err => of({ err }))
+      );
   }
 
   register(user: User) {
     return this.http.post<AuthUser>(`${env.API_URL}/users/sign-up`, user)
-      .pipe(map(authUser => {
-        this.doLogin(authUser);
-        return authUser;
-      }));
+      .pipe(
+        map(authUser => {
+          this.doLogin(authUser);
+          return authUser;
+        }),
+        catchError(err => of({ err }))
+      );
   }
 
   logout() {

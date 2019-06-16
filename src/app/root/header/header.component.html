@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div *ngIf="AuthSrv.currentUser">
-      <span>Welcome, {{ AuthSrv.currentUser?.user.email }}</span>
+      <span>Welcome, {{ AuthSrv.currentUser?.email }}</span>
       <button class="btn btn-outline-warning"
         (click)="$event.preventDefault();signOut();">
         SignOut
