@@ -17,8 +17,8 @@ const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'books', component: BookListComponent, canActivate: [AuthGuard]  },
-  { path: 'purchase', component: PurchaseComponent, canActivate: [AuthGuard]  },
-  { path: 'borrowing', component: BorrowingComponent, canActivate: [AuthGuard]  },
+  { path: 'purchase/:bookId', component: PurchaseComponent, canActivate: [AuthGuard]  },
+  { path: 'borrowing/:bookId', component: BorrowingComponent, canActivate: [AuthGuard]  },
   { path: '**', component: PageNotFoundComponent }
 ];
 
