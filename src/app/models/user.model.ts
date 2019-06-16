@@ -2,7 +2,11 @@ export interface User {
   userId?: number;
   userName: string;
   email: string;
-  userPassword: string;
+  password?: string;
+  address: string;
+  mobile: string;
+  birthDate: Date | string | null;
+  gender: boolean;
   IsDeleted?: boolean;
 }
 

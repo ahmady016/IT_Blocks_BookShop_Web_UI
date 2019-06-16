@@ -11,12 +11,14 @@ import { BookListComponent } from './books/book-list/book.list.component';
 import { BorrowingComponent } from './orders/borrowing/borrowing.component';
 import { PurchaseComponent } from './orders/purchase/purchase.component';
 import { PageNotFoundComponent } from './page.not.found.component';
+import { BookFormComponent } from './books/book-form/book.form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'books', component: BookListComponent, canActivate: [AuthGuard]  },
+  { path: 'books/:type/:bookId', component: BookFormComponent, canActivate: [AuthGuard]  },
   { path: 'purchase/:bookId', component: PurchaseComponent, canActivate: [AuthGuard]  },
   { path: 'borrowing/:bookId', component: BorrowingComponent, canActivate: [AuthGuard]  },
   { path: '**', component: PageNotFoundComponent }
