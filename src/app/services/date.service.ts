@@ -19,7 +19,7 @@ export class DateService {
       result.push(i.toString());
     return result;
   }
-  public isValidDate(day: number, month: number, year: number): boolean {
+  isValidDate(day: number, month: number, year: number): boolean {
     const isLeapYear = (year) => ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
     if (day === 31 && (month === 2 || month === 4 || month === 6 || month === 9 || month === 11))
       return false;
@@ -29,4 +29,5 @@ export class DateService {
       return false;
     return true;
   }
+
 }

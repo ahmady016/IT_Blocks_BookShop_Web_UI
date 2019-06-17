@@ -8,9 +8,9 @@ import { env } from '../../environments/environment';
 import { Book } from '../models/book.model';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class BookService {
 
-  public currentBook: Book;
+  public currentBook: Book = null;
   private booksSubject: BehaviorSubject<Book[]>;
   public $books: Observable<Book[]>;
 

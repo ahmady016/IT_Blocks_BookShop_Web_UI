@@ -3,7 +3,7 @@ export interface Book {
   title: string;
   subtitle: string;
   publishedDate?: Date | string;
-  thumbnailUrl: string;
+  thumbnailURL: string;
   pageCount: number;
   description?: string;
   authors: string;
