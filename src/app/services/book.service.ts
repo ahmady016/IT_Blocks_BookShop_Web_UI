@@ -27,9 +27,20 @@ export class BookService {
     this.currentBook = this.booksSubject.value.find(book => book.bookId === bookId);
   }
 
+  query(value: string) {
+    return this.http.get<Book[]>(`${env.API_URL}/books?filters=title%${value}`)
+      .pipe(
+        map(books => {
+          this.booksSubject.next(books);
+          return books;
+        }),
+        catchError(err => of({ err }))
+      );
+  }
+
   find(bookId?: number) {
     if (!bookId) {
-      return this.http.get<Book[]>(`${env.API_URL}/books`)
+      return this.http.get<Book[]>(`${env.API_URL}/books/list/existing`)
         .pipe(
           map(books => {
             this.booksSubject.next(books);
@@ -83,7 +94,7 @@ export class BookService {
     return this.http.post<Book>(`${env.API_URL}/books/delete?deleteType=${deleteType}`, book)
       .pipe(
         map(deleteResult => {
-          this.booksSubject.next(this.books.filter(book => book.bookId !== deleteResult.bookId ));
+          this.booksSubject.next(this.books.filter(book => book.bookId !== deleteResult.bookId));
           return book;
         }),
         catchError(err => of({ err }))
