@@ -2,104 +2,87 @@
 
   <div class="form-group">
     <label for="title">Title</label>
-    <input type="text" id="title" class="form-control" placeholder="Title"
-      [disabled]="readonly"
-      formControlName="title">
-    <div class="alert bg-danger" *ngIf="title.invalid && title.touched">
-      <div *ngIf="title.errors.required">Title Required</div>
+    <input type="text" id="title" class="form-control" placeholder="Title" formControlName="title">
+    <div class="alert bg-danger" *ngIf="title?.invalid && title?.touched">
+      <div *ngIf="title?.errors.required">Title Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="subtitle">Subtitle</label>
-    <input type="text" id="subtitle" class="form-control" placeholder="Subtitle"
-      [disabled]="readonly"
-      formControlName="subtitle">
-    <div class="alert bg-danger" *ngIf="subtitle.invalid && subtitle.touched">
-      <div *ngIf="subtitle.errors.required">Subtitle Required</div>
+    <input type="text" id="subtitle" class="form-control" placeholder="Subtitle" formControlName="subtitle">
+    <div class="alert bg-danger" *ngIf="subtitle?.invalid && subtitle?.touched">
+      <div *ngIf="subtitle?.errors.required">Subtitle Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" id="description" class="form-control" placeholder="Description"
-      [disabled]="readonly"
-      formControlName="description">
+    <input type="text" id="description" class="form-control" placeholder="Description" formControlName="description">
   </div>
 
   <div class="form-group">
     <label for="thumbnailURL">ThumbnailURL</label>
-    <input type="text" id="thumbnailURL" class="form-control" placeholder="ThumbnailURL"
-      [disabled]="readonly"
-      formControlName="thumbnailURL">
-    <div class="alert bg-danger" *ngIf="thumbnailURL.invalid && thumbnailURL.touched">
-      <div *ngIf="thumbnailURL.errors.required">ThumbnailURL Required</div>
+    <input type="text" id="thumbnailURL" class="form-control" placeholder="ThumbnailURL" formControlName="thumbnailURL">
+    <div class="alert bg-danger" *ngIf="thumbnailURL?.invalid && thumbnailURL?.touched">
+      <div *ngIf="thumbnailURL?.errors.required">ThumbnailURL Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="pageCount">PageCount</label>
-    <input type="number" id="pageCount" class="form-control" placeholder="PageCount"
-      [disabled]="readonly"
-      formControlName="pageCount">
-    <div class="alert bg-danger" *ngIf="pageCount.invalid && pageCount.touched">
-      <div *ngIf="pageCount.errors.required">PageCount Required</div>
+    <input type="number" id="pageCount" class="form-control" placeholder="PageCount" formControlName="pageCount">
+    <div class="alert bg-danger" *ngIf="pageCount?.invalid && pageCount?.touched">
+      <div *ngIf="pageCount?.errors.required">PageCount Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="inventoryCount">inventoryCount</label>
-    <input type="number" id="inventoryCount" class="form-control" placeholder="inventoryCount"
-      [disabled]="readonly"
-      formControlName="inventoryCount">
-    <div class="alert bg-danger" *ngIf="inventoryCount.invalid && inventoryCount.touched">
-      <div *ngIf="inventoryCount.errors.required">inventoryCount Required</div>
+    <input type="number" id="inventoryCount" class="form-control" placeholder="inventoryCount" formControlName="inventoryCount">
+    <div class="alert bg-danger" *ngIf="inventoryCount?.invalid && inventoryCount?.touched">
+      <div *ngIf="inventoryCount?.errors.required">inventoryCount Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="unitPrice">UnitPrice</label>
-    <input type="number" id="unitPrice" class="form-control" placeholder="UnitPrice"
-      [disabled]="readonly"
-      formControlName="unitPrice">
-    <div class="alert bg-danger" *ngIf="unitPrice.invalid && unitPrice.touched">
-      <div *ngIf="unitPrice.errors.required">UnitPrice Required</div>
+    <input type="number" id="unitPrice" class="form-control" placeholder="UnitPrice" formControlName="unitPrice">
+    <div class="alert bg-danger" *ngIf="unitPrice?.invalid && unitPrice?.touched">
+      <div *ngIf="unitPrice?.errors.required">UnitPrice Required</div>
     </div>
   </div>
 
-  <label for="birthDate">Date Of Birth</label>
+  <label for="birthDate">Published Date</label>
   <div class="form-group d-flex justify-content-between">
-    <select class="w-25 custom-select"
-      [disabled]="readonly"
-      formControlName="day">
+    <select class="w-25 custom-select" formControlName="day">
       <option value="">Day</option>
       <option *ngFor="let day of days" [value]="day">
         {{day}}
       </option>
     </select>
-    <select class="w-25 custom-select"
-      [disabled]="readonly"
-      formControlName="month">
+    <select class="w-25 custom-select" formControlName="month">
       <option value="">Month</option>
       <option *ngFor="let month of months" [value]="month[0]">
         {{month[1]}}
       </option>
     </select>
-    <select class="w-25 custom-select"
-      [disabled]="readonly"
-      formControlName="year">
+    <select class="w-25 custom-select" formControlName="year">
       <option value="">Year</option>
       <option *ngFor="let year of years" [value]="year">
         {{year}}
       </option>
     </select>
   </div>
-  <input type="hidden"
-    [disabled]="readonly"
-    formControlName="publishedDate" [value]="publishedDate">
-  <div class="alert bg-danger" *ngIf="publishedDate.invalid && publishedDate.touched">Invalid Date ...</div>
+  <input type="hidden" formControlName="publishedDate" [value]="publishedDate">
+  <div class="alert bg-danger" *ngIf="publishedDate?.invalid && publishedDate?.touched">Invalid Date ...</div>
 
-  <button type="submit" class="btn btn-warning btn-lg w-50" [disabled]="signUpForm.invalid" (click)="signUp()">
+  <button *ngIf="!readonly"
+    type="submit"
+    class="btn btn-warning btn-lg w-50"
+    [disabled]="signUpForm?.invalid"
+    (click)="signUp()">
     Save Book
   </button>
+
 </form>

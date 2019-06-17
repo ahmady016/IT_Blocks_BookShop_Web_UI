@@ -64,17 +64,49 @@ export class BookFormComponent implements OnInit {
 		this.months = this.dateSrv.Months();
 		this.years = this.dateSrv.Years(70);
 		// build form fields
-		this.fields.title = new FormControl((book) ? book.title : '', Validators.required);
-		this.fields.subtitle = new FormControl((book) ? book.subtitle : '', Validators.required);
-		this.fields.description = new FormControl((book) ? book.description : '');
-		this.fields.thumbnailURL = new FormControl((book) ? book.thumbnailURL : '', Validators.required);
-		this.fields.pageCount = new FormControl((book) ? book.pageCount : '', Validators.required);
-		this.fields.inventoryCount = new FormControl((book) ? book.inventoryCount : '', Validators.required);
-		this.fields.unitPrice = new FormControl((book) ? book.unitPrice : '', Validators.required);
-		this.fields.day = new FormControl((book) ? new Date(book.publishedDate).getDate() : '', Validators.required);
-		this.fields.month = new FormControl((book) ? new Date(book.publishedDate).getMonth() : '', Validators.required);
-		this.fields.year = new FormControl((book) ? new Date(book.publishedDate).getFullYear() : '', Validators.required);
-		this.fields.publishedDate = new FormControl((book) ? book.publishedDate : '', Validators.required);
+		this.fields.title = new FormControl(
+			{ value: (book) ? book.title : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.subtitle = new FormControl(
+			{ value: (book) ? book.subtitle : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.description = new FormControl(
+			{ value: (book) ? book.description : '', disabled: this.readonly })
+
+		this.fields.thumbnailURL = new FormControl(
+			{ value: (book) ? book.thumbnailURL : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.pageCount = new FormControl(
+			{ value: (book) ? book.pageCount : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.inventoryCount = new FormControl(
+			{ value: (book) ? book.inventoryCount : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.unitPrice = new FormControl(
+			{ value: (book) ? book.unitPrice : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.day = new FormControl(
+			{ value: (book) ? new Date(book.publishedDate).getDate() : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.month = new FormControl(
+			{ value: (book) ? new Date(book.publishedDate).getMonth() : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.year = new FormControl(
+			{ value: (book) ? new Date(book.publishedDate).getFullYear() : '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.publishedDate = new FormControl(
+			{ value: (book) ? book.publishedDate : '', disabled: this.readonly },
+			Validators.required
+		);
 		// build Angular Form
 		this.bookForm = new FormGroup({ ...this.fields });
 	}
