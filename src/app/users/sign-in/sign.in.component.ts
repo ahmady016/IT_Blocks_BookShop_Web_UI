@@ -16,7 +16,7 @@ export class SignInComponent implements OnInit {
 	password: FormControl;
 
 	constructor(
-		private authSrv: AuthService,
+		public authSrv: AuthService,
 		private router: Router
 	) { }
 

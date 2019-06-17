@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
 	gender: FormControl;
 
 	constructor(
-		private authSrv: AuthService,
+		public authSrv: AuthService,
 		private dateSrv: DateService,
 		private router: Router
 	) { }
