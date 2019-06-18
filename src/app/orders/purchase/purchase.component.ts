@@ -67,13 +67,13 @@ export class PurchaseComponent implements OnInit {
 		// save the purchase order
 		this.orderSrv.doPurchase(this.purchaseOrder)
 			.subscribe(
-				_ => void this.router.navigate(["/books"]),
-				console.log
+				_ => {
+					if(this.orderSrv.orderError)
+						console.log(this.orderSrv.orderError)
+					else
+						this.router.navigate(["/books"])
+				}
 			);
-		// reset the form
-		this.purchaseForm.reset();
-		// go back to books
-		this.router.navigate(['books']);
 	}
 
 	cancel() {

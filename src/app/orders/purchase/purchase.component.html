@@ -1,4 +1,7 @@
 <h2>Purchase</h2>
+<div *ngIf="orderSrv.orderError" class="alert alert-danger">
+  {{ orderSrv.orderError.innerException?.Message || orderSrv.orderError.message }}
+</div>
 <form class="w-50 mx-auto" [formGroup]="purchaseForm" (submit)="$event.preventDefault();">
 
   <div class="form-group">
