@@ -79,7 +79,7 @@ export class BookService {
 
   add(book: Book) {
     book.publishedDate = this.dateSrv.toSqlFormat(book.publishedDate as string);
-    if(this.currentUser)
+    if (this.currentUser)
       book.userId = this.currentUser.user.userId;
 
     return this.http.post<Book>(`${env.API_URL}/books/add`, book)
@@ -94,17 +94,19 @@ export class BookService {
 
   update(book: Book) {
     book.publishedDate = this.dateSrv.toSqlFormat(book.publishedDate as string);
-    if(this.currentUser)
+    if (this.currentUser)
       book.userId = this.currentUser.user.userId;
 
     return this.http.put<Book>(`${env.API_URL}/books/update`, book)
       .pipe(
         map(updatedBook => {
-          this.booksSubject.next(this.books.map(book => {
-            if (book.bookId === updatedBook.bookId)
-              return updatedBook;
-            return book;
-          }));
+          this.booksSubject.next(
+            this.books.map(book => {
+              if (book.bookId === updatedBook.bookId)
+                return updatedBook;
+              return book;
+            })
+          );
           return book;
         }),
         catchError(err => of({ err }))

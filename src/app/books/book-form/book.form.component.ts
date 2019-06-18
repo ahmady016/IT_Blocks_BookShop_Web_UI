@@ -45,7 +45,9 @@ export class BookFormComponent implements OnInit {
 		private dateSrv: DateService,
 		private router: Router,
 		private route: ActivatedRoute
-	) {
+	) { }
+
+	ngOnInit(): void {
 		this.route.params.subscribe(route => {
 			if (route.bookId) {
 				this.bookId = +route.bookId;
@@ -68,8 +70,6 @@ export class BookFormComponent implements OnInit {
 				this.edit = true;
 		});
 	}
-
-	ngOnInit(): void { }
 
 	createForm(book: Book) {
 		// fill Date Options
@@ -154,24 +154,20 @@ export class BookFormComponent implements OnInit {
 		// add the newBook
 		this.newBook = this.bookForm.value;
 
-		console.log("TCL: BookFormComponent -> save -> this.newBook", this.newBook)
-		console.log("TCL: BookFormComponent -> save -> this.bookId", this.bookId)
-
-		if (this.bookId)
+		if (this.bookId) {
+			this.newBook.bookId = this.bookId;
 			this.bookSrv.update(this.newBook)
 				.subscribe(
 					_ => void this.router.navigate(["/books"]),
 					console.log
 				);
+		}
 		else
 			this.bookSrv.add(this.newBook)
 				.subscribe(
 					_ => void this.router.navigate(["/books"]),
 					console.log
 				);
-
-		this.bookForm.reset();
-		this.router.navigate(['books']);
 	}
 
 	cancel() {
