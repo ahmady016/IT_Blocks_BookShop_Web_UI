@@ -1,7 +1,7 @@
 export interface Customer {
-  CustomerId?: number;
-  CustomerName: string;
-  BirthDate?: Date | string;
-  UserId?: number;
-  IsDeleted?: boolean;
+  customerId?: number;
+  customerName: string;
+  birthDate?: Date | string;
+  userId?: number;
+  isDeleted?: boolean;
 }
