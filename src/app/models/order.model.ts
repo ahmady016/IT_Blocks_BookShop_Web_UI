@@ -18,5 +18,5 @@ export interface BorrowingOrder {
   bookId?: number | null;
   customerId?: number | null;
   userId?: number | null;
-  borrowing: Borrowing;
+  customer: Customer;
 }
