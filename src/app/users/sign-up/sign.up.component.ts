@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
 	signUpForm: FormGroup;
 	email: FormControl;
 	password: FormControl;
-	name: FormControl;
+	userName: FormControl;
 	address: FormControl;
 	mobile: FormControl;
 	day: FormControl;
@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
 		// build Controls
 		this.email = new FormControl("", [Validators.required, Validators.email]);
 		this.password = new FormControl("", [Validators.required, Validators.minLength(6)]);
-		this.name = new FormControl("", Validators.required);
+		this.userName = new FormControl("", Validators.required);
 		this.address = new FormControl("", Validators.required);
 		this.mobile = new FormControl("", Validators.required);
 		this.birthDate = new FormControl("", Validators.required);
@@ -58,7 +58,7 @@ export class SignUpComponent implements OnInit {
 		this.signUpForm = new FormGroup({
 			email: this.email,
 			password: this.password,
-			name: this.name,
+			userName: this.userName,
 			address: this.address,
 			mobile: this.mobile,
 			birthDate: this.birthDate,

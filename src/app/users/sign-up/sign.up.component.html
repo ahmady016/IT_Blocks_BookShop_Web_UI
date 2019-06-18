@@ -22,10 +22,10 @@
   </div>
 
   <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" class="form-control" placeholder="Name" formControlName="name">
-    <div class="alert bg-danger" *ngIf="name.invalid && name.touched">
-      <div>Name Required</div>
+    <label for="userName">User Name</label>
+    <input type="text" id="userName" class="form-control" placeholder="User Name" formControlName="userName">
+    <div class="alert bg-danger" *ngIf="userName.invalid && userName.touched">
+      <div>User Name Required</div>
     </div>
   </div>
 
@@ -73,12 +73,12 @@
   <div class="form-group">
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="male" name="gender" class="custom-control-input"
-              value="male" formControlName="gender">
+              value="true" formControlName="gender">
       <label class="custom-control-label" for="male">Male</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="female" name="gender" class="custom-control-input"
-              value="female" formControlName="gender">
+              value="false" formControlName="gender">
       <label class="custom-control-label" for="female">Female</label>
     </div>
     <div class="alert bg-danger" *ngIf="gender.invalid && gender.touched">
