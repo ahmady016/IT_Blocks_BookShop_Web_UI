@@ -37,7 +37,13 @@ export class BookListComponent implements OnInit {
 				debounceTime(1000),
 				distinctUntilChanged()
 			)
-			.subscribe(value => this.bookSrv.query(value));
+			.subscribe(
+				value => this.bookSrv.query(value)
+					.subscribe(
+						console.log,
+						console.log
+					)
+			);
 	}
 
 	removeBook(book: Book) {

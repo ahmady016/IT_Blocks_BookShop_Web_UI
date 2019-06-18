@@ -61,7 +61,11 @@ export class BorrowingComponent implements OnInit {
 			}
 		};
 		// save the purchase order
-		this.orderSrv.doBorrowing(this.borrowingOrder);
+		this.orderSrv.doBorrowing(this.borrowingOrder)
+			.subscribe(
+				_ => void this.router.navigate(["/books"]),
+				console.log
+			);
 		// reset the form
 		this.borrowingForm.reset();
 		// go back to books
