@@ -5,19 +5,23 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
+import { DateService } from './date.service';
 import { Book } from '../models/book.model';
-import { User } from './../models/user.model';
+import { AuthUser } from './../models/user.model';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
 
   public currentBook: Book = null;
-  private currentUser: User = null;
+  private currentUser: AuthUser = null;
   private booksSubject: BehaviorSubject<Book[]>;
   public $books: Observable<Book[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private dateSrv: DateService
+  ) {
     this.booksSubject = new BehaviorSubject<Book[]>([]);
     this.$books = this.booksSubject.asObservable();
     this.currentUser = LS.get('currentUser');
@@ -32,7 +36,7 @@ export class BookService {
   }
 
   query(value: string) {
-    return this.http.get<Book[]>(`${env.API_URL}/books?filters=title%${value}`)
+    return this.http.get<Book[]>(`${env.API_URL}/books/query?filters=title|%|${value}`)
       .pipe(
         map(books => {
           this.booksSubject.next(books);
@@ -69,8 +73,10 @@ export class BookService {
   }
 
   add(book: Book) {
+    book.publishedDate = this.dateSrv.toSqlFormat(book.publishedDate as string);
     if(this.currentUser)
-      book.userId = this.currentUser.userId;
+      book.userId = this.currentUser.user.userId;
+
     return this.http.post<Book>(`${env.API_URL}/books/add`, book)
       .pipe(
         map(book => {
@@ -82,8 +88,10 @@ export class BookService {
   }
 
   update(book: Book) {
+    book.publishedDate = this.dateSrv.toSqlFormat(book.publishedDate as string);
     if(this.currentUser)
-      book.userId = this.currentUser.userId;
+      book.userId = this.currentUser.user.userId;
+
     return this.http.put<Book>(`${env.API_URL}/books/update`, book)
       .pipe(
         map(updatedBook => {
