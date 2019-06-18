@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+import { DateService } from './date.service';
 import { User, AuthUser } from '../models/user.model';
 import { env } from '../../environments/environment';
 import LS from '../localStorage';
@@ -12,7 +13,10 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public $currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(
+      private http: HttpClient,
+      private dateSrv: DateService
+    ) {
     this.currentUserSubject = new BehaviorSubject<User>(LS.get('currentUser'));
     this.$currentUser = this.currentUserSubject.asObservable();
   }
@@ -42,6 +46,7 @@ export class AuthService {
   }
 
   register(user: User) {
+    user.birthDate = this.dateSrv.toSqlFormat(user.birthDate as string);
     return this.http.post<AuthUser>(`${env.API_URL}/users/sign-up`, user)
       .pipe(
         map(authUser => {

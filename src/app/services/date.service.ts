@@ -29,5 +29,9 @@ export class DateService {
       return false;
     return true;
   }
-
+  toSqlFormat(date: string): string {
+    return date.split('/')
+      .reverse()
+      .join('-')
+  }
 }
