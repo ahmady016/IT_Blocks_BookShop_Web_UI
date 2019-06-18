@@ -39,7 +39,7 @@ export class SignInComponent implements OnInit {
 		this.authSrv.login(this.signInForm.value.email, this.signInForm.value.password)
 			.subscribe(
 				_ => void this.router.navigate(["/books"]),
-				error => { this.error = true; }
+				error => void (this.error = true)
 			);
 		this.signInForm.reset();
 	}

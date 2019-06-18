@@ -17,7 +17,7 @@ export class AuthService {
       private http: HttpClient,
       private dateSrv: DateService
     ) {
-    this.currentUserSubject = new BehaviorSubject<User>(LS.get('currentUser'));
+    this.currentUserSubject = new BehaviorSubject<User>(LS.get('currentUser').user);
     this.$currentUser = this.currentUserSubject.asObservable();
   }
 

@@ -1,11 +1,11 @@
 <form class="w-50 mx-auto" [formGroup]="signInForm">
 
   <div class="form-group">
-    <label for="email">Name</label>
-    <input type="text" class="form-control" id="email" placeholder="Enter email" formControlName="email">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" placeholder="Enter Email" formControlName="email">
     <div class="alert bg-danger" *ngIf="email.invalid && email.touched">
-      <div *ngIf="email.errors.required">email Required</div>
-      <div *ngIf="email.errors.email">invalid email</div>
+      <div *ngIf="email.errors.required">Email Required</div>
+      <div *ngIf="email.errors.email">invalid Email</div>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="alert bg-danger" *ngIf="err">invalid email or password !!!</div>
+  <div class="alert bg-danger" *ngIf="error">invalid email or password !!!</div>
 
   <button class="btn btn-warning btn-lg" (click)="signIn($event)">
     SignIn
