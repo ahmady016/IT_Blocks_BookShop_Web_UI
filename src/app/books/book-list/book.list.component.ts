@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { BookService } from './../../services/book.service';
+import { OrderService } from './../../services/order.service';
 import { Book } from './../../models/book.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class BookListComponent implements OnInit {
 
 	constructor(
 		public bookSrv: BookService,
-		private router: Router
+		public orderSrv: OrderService
 	) { }
 
 	ngOnInit(): void {
@@ -30,6 +30,12 @@ export class BookListComponent implements OnInit {
 		this.fields.booksQuery = new FormControl('');
 		// build Angular Form
 		this.searchForm = new FormGroup({ ...this.fields });
+		// get all existing books
+		this.bookSrv.find()
+			.subscribe(
+				console.log,
+				console.log
+			)
 		// values changes listener
 		this.fields.booksQuery.valueChanges
 			.pipe(
@@ -49,5 +55,9 @@ export class BookListComponent implements OnInit {
 	removeBook(book: Book) {
 		if (confirm('are you sure you want to delete this book?'))
 			this.bookSrv.delete('logical', book)
+				.subscribe(
+					console.log,
+					console.log
+				);
 	}
 }
