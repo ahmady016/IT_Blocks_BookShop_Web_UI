@@ -48,7 +48,7 @@ export class BookFormComponent implements OnInit {
 	) {
 		this.route.params.subscribe(route => {
 			if (route.bookId) {
-				this.bookId = route.bookId;
+				this.bookId = +route.bookId;
 				this.bookSrv.find(route.bookId);
 			}
 			if (route.type === 'view')

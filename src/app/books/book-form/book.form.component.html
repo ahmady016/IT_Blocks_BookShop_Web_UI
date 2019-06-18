@@ -3,16 +3,16 @@
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" id="title" class="form-control" placeholder="Title" formControlName="title">
-    <div class="alert bg-danger" *ngIf="title?.invalid && title?.touched">
-      <div *ngIf="title?.errors.required">Title Required</div>
+    <div class="alert bg-danger" *ngIf="fields.title.invalid && fields.title.touched">
+      <div *ngIf="fields.title.errors.required">Title Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="subtitle">Subtitle</label>
     <input type="text" id="subtitle" class="form-control" placeholder="Subtitle" formControlName="subtitle">
-    <div class="alert bg-danger" *ngIf="subtitle?.invalid && subtitle?.touched">
-      <div *ngIf="subtitle?.errors.required">Subtitle Required</div>
+    <div class="alert bg-danger" *ngIf="fields.subtitle.invalid && fields.subtitle.touched">
+      <div *ngIf="fields.subtitle.errors.required">Subtitle Required</div>
     </div>
   </div>
 
@@ -24,32 +24,32 @@
   <div class="form-group">
     <label for="thumbnailURL">ThumbnailURL</label>
     <input type="text" id="thumbnailURL" class="form-control" placeholder="ThumbnailURL" formControlName="thumbnailURL">
-    <div class="alert bg-danger" *ngIf="thumbnailURL?.invalid && thumbnailURL?.touched">
-      <div *ngIf="thumbnailURL?.errors.required">ThumbnailURL Required</div>
+    <div class="alert bg-danger" *ngIf="fields.thumbnailURL.invalid && fields.thumbnailURL.touched">
+      <div *ngIf="fields.thumbnailURL.errors.required">ThumbnailURL Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="pageCount">PageCount</label>
     <input type="number" id="pageCount" class="form-control" placeholder="PageCount" formControlName="pageCount">
-    <div class="alert bg-danger" *ngIf="pageCount?.invalid && pageCount?.touched">
-      <div *ngIf="pageCount?.errors.required">PageCount Required</div>
+    <div class="alert bg-danger" *ngIf="fields.pageCount.invalid && fields.pageCount.touched">
+      <div *ngIf="fields.pageCount.errors.required">PageCount Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="inventoryCount">inventoryCount</label>
     <input type="number" id="inventoryCount" class="form-control" placeholder="inventoryCount" formControlName="inventoryCount">
-    <div class="alert bg-danger" *ngIf="inventoryCount?.invalid && inventoryCount?.touched">
-      <div *ngIf="inventoryCount?.errors.required">inventoryCount Required</div>
+    <div class="alert bg-danger" *ngIf="fields.inventoryCount.invalid && fields.inventoryCount.touched">
+      <div *ngIf="fields.inventoryCount.errors.required">inventoryCount Required</div>
     </div>
   </div>
 
   <div class="form-group">
     <label for="unitPrice">UnitPrice</label>
     <input type="number" id="unitPrice" class="form-control" placeholder="UnitPrice" formControlName="unitPrice">
-    <div class="alert bg-danger" *ngIf="unitPrice?.invalid && unitPrice?.touched">
-      <div *ngIf="unitPrice?.errors.required">UnitPrice Required</div>
+    <div class="alert bg-danger" *ngIf="fields.unitPrice.invalid && fields.unitPrice.touched">
+      <div *ngIf="fields.unitPrice.errors.required">UnitPrice Required</div>
     </div>
   </div>
 
@@ -74,14 +74,14 @@
       </option>
     </select>
   </div>
-  <input type="hidden" formControlName="publishedDate" [value]="publishedDate">
-  <div class="alert bg-danger" *ngIf="publishedDate?.invalid && publishedDate?.touched">Invalid Date ...</div>
+  <input type="hidden" formControlName="publishedDate" [value]="fields.publishedDate">
+  <div class="alert bg-danger" *ngIf="fields.publishedDate.invalid && fields.publishedDate.touched">Invalid Date ...</div>
 
   <button *ngIf="!readonly"
     type="submit"
     class="btn btn-warning btn-lg w-50"
-    [disabled]="signUpForm?.invalid"
-    (click)="signUp()">
+    [disabled]="bookForm.invalid"
+    (click)="save()">
     Save Book
   </button>
 
