@@ -6,17 +6,21 @@ import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
 import { Book } from '../models/book.model';
+import { User } from './../models/user.model';
+import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
 
   public currentBook: Book = null;
+  private currentUser: User = null;
   private booksSubject: BehaviorSubject<Book[]>;
   public $books: Observable<Book[]>;
 
   constructor(private http: HttpClient) {
     this.booksSubject = new BehaviorSubject<Book[]>([]);
     this.$books = this.booksSubject.asObservable();
+    this.currentUser = LS.get('currentUser');
   }
 
   public get books(): Book[] {
@@ -65,6 +69,8 @@ export class BookService {
   }
 
   add(book: Book) {
+    if(this.currentUser)
+      book.userId = this.currentUser.userId;
     return this.http.post<Book>(`${env.API_URL}/books/add`, book)
       .pipe(
         map(book => {
@@ -76,6 +82,8 @@ export class BookService {
   }
 
   update(book: Book) {
+    if(this.currentUser)
+      book.userId = this.currentUser.userId;
     return this.http.put<Book>(`${env.API_URL}/books/update`, book)
       .pipe(
         map(updatedBook => {
