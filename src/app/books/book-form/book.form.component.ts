@@ -30,7 +30,7 @@ export class BookFormComponent implements OnInit {
 		title: FormControl,
 		subtitle: FormControl,
 		description: FormControl,
-		thumbnailURL: FormControl,
+		thumbnailUrl: FormControl,
 		pageCount: FormControl,
 		inventoryCount: FormControl,
 		unitPrice: FormControl,
@@ -75,8 +75,8 @@ export class BookFormComponent implements OnInit {
 		this.fields.description = new FormControl(
 			{ value: (book) ? book.description : '', disabled: this.readonly })
 
-		this.fields.thumbnailURL = new FormControl(
-			{ value: (book) ? book.thumbnailURL : '', disabled: this.readonly },
+		this.fields.thumbnailUrl = new FormControl(
+			{ value: (book) ? book.thumbnailUrl : '', disabled: this.readonly },
 			Validators.required
 		);
 		this.fields.pageCount = new FormControl(
@@ -149,10 +149,21 @@ export class BookFormComponent implements OnInit {
 		// add the newBook
 		this.newBook = this.bookForm.value;
 
+		console.log("TCL: BookFormComponent -> save -> this.newBook", this.newBook)
+		console.log("TCL: BookFormComponent -> save -> this.bookId", this.bookId)
+
 		if (this.bookId)
-			this.bookSrv.update(this.newBook);
+			this.bookSrv.update(this.newBook)
+				.subscribe(
+					_ => void this.router.navigate(["/books"]),
+					console.log
+				);
 		else
-			this.bookSrv.add(this.newBook);
+			this.bookSrv.add(this.newBook)
+				.subscribe(
+					_ => void this.router.navigate(["/books"]),
+					console.log
+				);
 
 		this.bookForm.reset();
 		this.router.navigate(['books']);

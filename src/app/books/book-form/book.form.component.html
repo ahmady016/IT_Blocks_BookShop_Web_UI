@@ -22,10 +22,10 @@
   </div>
 
   <div class="form-group">
-    <label for="thumbnailURL">ThumbnailURL</label>
-    <input type="text" id="thumbnailURL" class="form-control" placeholder="ThumbnailURL" formControlName="thumbnailURL">
-    <div class="alert bg-danger" *ngIf="fields.thumbnailURL.invalid && fields.thumbnailURL.touched">
-      <div *ngIf="fields.thumbnailURL.errors.required">ThumbnailURL Required</div>
+    <label for="thumbnailUrl">ThumbnailURL</label>
+    <input type="text" id="thumbnailUrl" class="form-control" placeholder="ThumbnailURL" formControlName="thumbnailUrl">
+    <div class="alert bg-danger" *ngIf="fields.thumbnailUrl.invalid && fields.thumbnailUrl.touched">
+      <div *ngIf="fields.thumbnailUrl.errors.required">ThumbnailURL Required</div>
     </div>
   </div>
 
@@ -78,7 +78,7 @@
   <div class="alert bg-danger" *ngIf="fields.publishedDate.invalid && fields.publishedDate.touched">Invalid Date ...</div>
 
   <button *ngIf="!readonly"
-    type="submit"
+    type="button"
     class="btn btn-warning btn-lg w-50"
     [disabled]="bookForm.invalid"
     (click)="save()">
