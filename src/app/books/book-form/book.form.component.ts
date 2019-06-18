@@ -49,7 +49,18 @@ export class BookFormComponent implements OnInit {
 		this.route.params.subscribe(route => {
 			if (route.bookId) {
 				this.bookId = +route.bookId;
-				this.bookSrv.find(route.bookId);
+				this.bookSrv.find(route.bookId)
+					.subscribe(
+						_ => {
+							// create the book Form with its values
+							this.createForm(this.bookSrv.currentBook);
+							// manually set publishedDate value on each date parts change
+							this.fields.day.valueChanges.subscribe(v => this._setPublishedDate());
+							this.fields.month.valueChanges.subscribe(v => this._setPublishedDate());
+							this.fields.year.valueChanges.subscribe(v => this._setPublishedDate());
+						},
+						console.log
+					);
 			}
 			if (route.type === 'view')
 				this.readonly = true;
@@ -57,6 +68,8 @@ export class BookFormComponent implements OnInit {
 				this.edit = true;
 		});
 	}
+
+	ngOnInit(): void { }
 
 	createForm(book: Book) {
 		// fill Date Options
@@ -128,14 +141,6 @@ export class BookFormComponent implements OnInit {
 			: this.fields.publishedDate.setValue('');
 		// mark the formControl as touched to enable error messages
 		this.fields.publishedDate.markAsTouched();
-	}
-
-	ngOnInit(): void {
-		this.createForm(this.bookSrv.currentBook);
-		// manually set publishedDate value on each date parts change
-		this.fields.day.valueChanges.subscribe(v => this._setPublishedDate());
-		this.fields.month.valueChanges.subscribe(v => this._setPublishedDate());
-		this.fields.year.valueChanges.subscribe(v => this._setPublishedDate());
 	}
 
 	save() {

@@ -13,9 +13,9 @@ import LS from '../localStorage';
 @Injectable({ providedIn: 'root' })
 export class BookService {
 
-  public currentBook: Book = null;
   private currentUser: AuthUser = null;
   private booksSubject: BehaviorSubject<Book[]>;
+  private currentBookSubject: BehaviorSubject<Book>;
   public $books: Observable<Book[]>;
 
   constructor(
@@ -23,6 +23,7 @@ export class BookService {
     private dateSrv: DateService
   ) {
     this.booksSubject = new BehaviorSubject<Book[]>([]);
+    this.currentBookSubject = new BehaviorSubject<Book>(null);
     this.$books = this.booksSubject.asObservable();
     this.currentUser = LS.get('currentUser');
   }
@@ -31,8 +32,12 @@ export class BookService {
     return this.booksSubject.value;
   }
 
+  public get currentBook(): Book {
+    return this.currentBookSubject.value;
+  }
+
   private setCurrentBook(bookId: number) {
-    this.currentBook = this.booksSubject.value.find(book => book.bookId === bookId);
+    this.currentBookSubject.next(this.booksSubject.value.find(book => book.bookId === bookId));
   }
 
   query(value: string) {
@@ -46,7 +51,7 @@ export class BookService {
       );
   }
 
-  find(bookId?: number) {
+  find(bookId?: number): any {
     if (!bookId) {
       return this.http.get<Book[]>(`${env.API_URL}/books/list/existing`)
         .pipe(
@@ -63,7 +68,7 @@ export class BookService {
           .pipe(
             map(book => {
               this.booksSubject.next([...this.books, book]);
-              this.currentBook = book;
+              this.currentBookSubject.next(book);
               return book;
             }),
             catchError(err => of({ err }))
