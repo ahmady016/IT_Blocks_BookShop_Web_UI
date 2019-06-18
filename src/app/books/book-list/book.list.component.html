@@ -1,43 +1,42 @@
-<form class="d-flex w-75 mx-auto" [formGroup]="searchForm" (submit)="$event.preventDefault();">
+<form class="d-flex w-75 mx-auto" [formGroup]="searchForm" (submit)="$event.preventDefault()">
   <h3 class="w-25">Book List</h3>
-  <input class="form-control form-control-lg w-75"
-    id="booksQuery"
-    name="booksQuery"
-    type="search"
-    aria-label="Search"
-    placeholder="Find your book ..."
-    formControlName="booksQuery"
-  />
+  <input class="form-control form-control-lg w-75" id="booksQuery" name="booksQuery" type="search" aria-label="Search"
+    placeholder="Find your book ..." formControlName="booksQuery" />
 </form>
 <hr />
-<div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let book of bookSrv.books">
-  <div class="card">
-    <a [routerLink]="['/book-form/view/', book.bookId]">
-      <img class="card-img-top" [src]="book.thumbnailUrl" alt={{book.title}} />
-    </a>
-    <div class="card-header flex-between bg-primary text-light">
-      <a [routerLink]="['/book-form/edit/', book.bookId]" class="btn btn-warning d-block">
-        <i class="fas fa-edit"></i> Edit
+<div *ngIf="orderSrv.orderStatus" class="alert alert-info">
+  {{orderSrv.orderStatus}}
+</div>
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let book of bookSrv.books">
+    <div class="card">
+      <a [routerLink]="['/book-form/view/', book.bookId]">
+        <img class="card-img-top" [src]="book.thumbnailUrl" alt="{{ book.title }}" />
       </a>
-      <button class="btn btn-danger" (click)="removeBook(book)">
-        <i class="fas fa-trash"></i> Delete
-      </button>
-    </div>
-    <div class="card-body">
+      <div class="card-header flex-between bg-primary text-light">
+        <a [routerLink]="['/book-form/edit/', book.bookId]" class="btn btn-warning d-block">
+          <i class="fas fa-edit"></i> Edit
+        </a>
+        <button class="btn btn-danger" (click)="removeBook(book)">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+      <div class="card-body">
         <h5 class="card-title">
-            <a [routerLink]="['/book-form/view/', book.bookId]" class="text-light">{{book.title}}</a>
+          <a [routerLink]="['/book-form/view/', book.bookId]" class="text-light">{{ book.title }}</a>
         </h5>
-        <p class="card-text">{{book.description}}</p>
-        <small class="text-muted d-block">Published: {{book.publishedDate}}</small>
-        <small class="text-muted d-block">Pages: {{book.pageCount}} | Price: {{book.unitPrice}}</small>
-    </div>
-    <div class="card-footer flex-between text-center">
+        <p class="card-text">{{ book.description }}</p>
+        <small class="text-muted d-block">Published: {{ book.publishedDate }}</small>
+        <small class="text-muted d-block">Pages: {{ book.pageCount }} | Price: {{ book.unitPrice }}</small>
+      </div>
+      <div class="card-footer flex-between text-center">
         <a [routerLink]="['/purchase/', book.bookId]" class="btn btn-success d-block">
           <i class="fas fa-shopping-basket"></i> Purchase
         </a>
         <a [routerLink]="['/borrowing/', book.bookId]" class="btn btn-info d-block">
           <i class="fas fa-hourglass-start"></i> Borrowing
         </a>
+      </div>
     </div>
   </div>
 </div>
