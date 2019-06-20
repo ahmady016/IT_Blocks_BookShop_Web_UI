@@ -1,5 +1,4 @@
 import { Customer } from './customer.model';
-import { Borrowing } from './borrowing.model';
 
 export interface PurchaseOrder {
   purchaseId?: number;

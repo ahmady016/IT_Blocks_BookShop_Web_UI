@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from './services/auth.guard';
-
 import { SignInComponent } from './users/sign-in/sign.in.component';
 import { SignUpComponent } from './users/sign-up/sign.up.component';
 import { BookListComponent } from './books/book-list/book.list.component';
@@ -13,8 +11,10 @@ import { PurchaseComponent } from './orders/purchase/purchase.component';
 import { PageNotFoundComponent } from './page.not.found.component';
 import { BookFormComponent } from './books/book-form/book.form.component';
 
+import { AuthGuard } from './_services/auth.guard';
+
 const routes: Routes = [
-  { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
+  { path: '', redirectTo: 'books', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'books', component: BookListComponent, canActivate: [AuthGuard]  },

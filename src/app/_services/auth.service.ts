@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { DateService } from './date.service';
-import { User, AuthUser } from '../models/user.model';
 import { env } from '../../environments/environment';
+import { User, AuthUser } from 'src/app/_models/user.model';
+import { DateService } from './date.service';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })

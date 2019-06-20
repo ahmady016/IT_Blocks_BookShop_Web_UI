@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { AuthService } from './../../services/auth.service';
-import { DateService } from './../../services/date.service';
-import { User } from '../../models/user.model';
+import { AuthService } from 'src/app/_services/auth.service';
+import { DateService } from 'src/app/_services/date.service';
+import { User } from 'src/app/_models/user.model';
 
 @Component({
 	selector: 'sign-up',

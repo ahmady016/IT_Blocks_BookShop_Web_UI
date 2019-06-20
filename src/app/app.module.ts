@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { JwtInterceptor } from './services/JwtInterceptor';
+
+import { JwtInterceptor } from 'src/app/_services/JwtInterceptor';
 
 import { AppComponent } from './root/app.component';
 import { FooterComponent } from './root/footer/footer.component';
