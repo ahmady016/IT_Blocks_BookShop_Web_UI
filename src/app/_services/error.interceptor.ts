@@ -4,11 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/_services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private authSrv: AuthService) { }
+  constructor(
+    private authSrv: AuthService,
+    private toastr: ToastrService
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -18,13 +22,20 @@ export class ErrorInterceptor implements HttpInterceptor {
           if ([401, 403].includes(err.status)) {
             this.authSrv.logout();
             location.reload(true);
+            this.toastr.error('Unauthorized access', 'Auth', {
+              progressBar: true
+            });
           }
-          return throwError({
+          let error = {
             message: !err.error || !err.error.message ? err.message : err.error.message,
             innerMessage: err.error && err.error.innerException ? err.error.innerException.Message : '',
             statusText: err.statusText,
             statusCode: err.status
+          };
+          this.toastr.error(error.innerMessage || error.message, 'Error', {
+            progressBar: true
           });
+          return throwError(error);
         })
       )
   }
