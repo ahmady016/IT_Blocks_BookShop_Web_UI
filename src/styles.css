@@ -1,8 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
 /* Bootstrap v4.2.1 */
 @import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
 /* font awesome icons v5.5.0 */
 @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+/* ngx-toastr styles */
+@import '../node_modules/ngx-toastr/toastr.css';
 
 body {
   margin: 0;
