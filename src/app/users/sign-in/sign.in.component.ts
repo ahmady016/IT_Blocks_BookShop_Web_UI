@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { AuthService } from 'src/app/_services/auth.service';
+import { AuthService } from 'src/app/_services';
 
 @Component({
 	selector: 'sign-in',

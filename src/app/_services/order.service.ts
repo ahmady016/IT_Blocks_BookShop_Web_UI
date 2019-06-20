@@ -5,8 +5,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
-import { PurchaseOrder, BorrowingOrder } from 'src/app/_models/order.model';
-import { AuthUser } from 'src/app/_models/user.model';
+import { AuthUser, PurchaseOrder, BorrowingOrder } from 'src/app/_models';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { OrderService } from 'src/app/_services/order.service';
-import { BorrowingOrder } from 'src/app/_models/order.model';
+import { OrderService } from 'src/app/_services';
+import { BorrowingOrder } from 'src/app/_models';
 
 @Component({
 	selector: 'borrowing',

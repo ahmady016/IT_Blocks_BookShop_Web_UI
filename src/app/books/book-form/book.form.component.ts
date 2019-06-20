@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { BookService } from 'src/app/_services/book.service';
-import { DateService } from 'src/app/_services/date.service';
-import { Book } from 'src/app/_models/Book.model';
+import { BookService, DateService } from 'src/app/_services';
+import { Book } from 'src/app/_models';
 
 @Component({
 	selector: 'book-form',

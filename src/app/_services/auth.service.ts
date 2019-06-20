@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
-import { User, AuthUser } from 'src/app/_models/user.model';
+import { User, AuthUser } from 'src/app/_models';
 import { DateService } from './date.service';
 import LS from '../localStorage';
 

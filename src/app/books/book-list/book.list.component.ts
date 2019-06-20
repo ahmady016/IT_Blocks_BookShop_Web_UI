@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { BookService } from 'src/app/_services/book.service';
-import { OrderService } from 'src/app/_services/order.service';
-import { Book } from 'src/app/_models/book.model';
+import { BookService, OrderService } from 'src/app/_services';
+import { Book } from 'src/app/_models';
 
 @Component({
 	selector: 'book-list',

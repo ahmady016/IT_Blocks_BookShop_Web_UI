@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { JwtInterceptor } from 'src/app/_services/JwtInterceptor';
+import { JwtInterceptor } from 'src/app/_services';
 
 import { AppComponent } from './root/app.component';
 import { FooterComponent } from './root/footer/footer.component';

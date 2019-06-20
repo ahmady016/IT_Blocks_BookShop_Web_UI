@@ -6,8 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
 import { DateService } from './date.service';
-import { Book } from 'src/app/_models/book.model';
-import { AuthUser } from 'src/app/_models/user.model';
+import { AuthUser, Book } from 'src/app/_models';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })
