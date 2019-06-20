@@ -4,8 +4,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
-import { User, AuthUser } from 'src/app/_models';
 import { DateService } from './date.service';
+import { User, AuthUser } from 'src/app/_models';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })
@@ -14,11 +14,17 @@ export class AuthService {
   public $currentUser: Observable<User>;
 
   constructor(
-      private http: HttpClient,
-      private dateSrv: DateService
-    ) {
-    this.currentUserSubject = new BehaviorSubject<User>(LS.get('currentUser').user);
+    private http: HttpClient,
+    private dateSrv: DateService
+  ) {
+    this.currentUserSubject = new BehaviorSubject<User>(this.getCurrentUser());
     this.$currentUser = this.currentUserSubject.asObservable();
+  }
+
+  private getCurrentUser() {
+    return LS.get('currentUser')
+      ? LS.get('currentUser').user
+      : null
   }
 
   private doLogin(authUser: AuthUser) {

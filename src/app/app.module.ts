@@ -4,7 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { JwtInterceptor } from 'src/app/_services';
+import { JwtInterceptor } from 'src/app/_services/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/_services/error.interceptor'
 
 import { AppComponent } from './root/app.component';
 import { FooterComponent } from './root/footer/footer.component';
@@ -21,7 +22,10 @@ import { HeaderComponent } from './root/header/header.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
