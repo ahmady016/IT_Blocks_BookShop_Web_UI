@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { env } from '../../environments/environment';
+import { DateService } from './date.service';
 import { AuthUser, PurchaseOrder, BorrowingOrder } from 'src/app/_models';
 import LS from '../localStorage';
 
@@ -15,6 +16,7 @@ export class OrderService {
 
   constructor(
     private http: HttpClient,
+    private dateSrv: DateService,
     private toastr: ToastrService
   ) {
     this.currentUser = LS.get('currentUser');
@@ -25,6 +27,7 @@ export class OrderService {
   }
 
   doPurchase(purchase: PurchaseOrder) {
+    purchase.purchaseDate = this.dateSrv.toSqlFormat(purchase.purchaseDate as string);
     if(this.currentUser)
       purchase.userId = this.currentUser.user.userId;
 
@@ -38,6 +41,9 @@ export class OrderService {
   }
 
   doBorrowing(borrowing: BorrowingOrder) {
+    borrowing.borrowingStartDate = this.dateSrv.toSqlFormat(borrowing.borrowingStartDate as string);
+    borrowing.borrowingEndDate = this.dateSrv.toSqlFormat(borrowing.borrowingEndDate as string);
+
     if(this.currentUser)
       borrowing.userId = this.currentUser.user.userId;
 
