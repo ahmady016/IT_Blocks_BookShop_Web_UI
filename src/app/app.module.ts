@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +22,6 @@ import { HeaderComponent } from './root/header/header.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgbModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AppRoutingModule
@@ -33,4 +32,5 @@ import { HeaderComponent } from './root/header/header.component';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

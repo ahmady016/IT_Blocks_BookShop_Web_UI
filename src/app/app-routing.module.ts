@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SignInComponent } from './users/sign-in/sign.in.component';
 import { SignUpComponent } from './users/sign-up/sign.up.component';
 import { BookListComponent } from './books/book-list/book.list.component';
@@ -37,6 +39,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgbDatepickerModule.forRoot(),
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
