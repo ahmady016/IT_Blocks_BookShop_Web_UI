@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
 import { OrderService } from 'src/app/_services';
 import { PurchaseOrder } from 'src/app/_models';
 
@@ -23,6 +25,7 @@ export class PurchaseComponent implements OnInit {
 		customerName: FormControl
 	}
 	purchaseForm: FormGroup;
+	purchaseDate: NgbDateStruct;
 
 	constructor(
 		private orderSrv: OrderService,
@@ -48,6 +51,13 @@ export class PurchaseComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.createForm();
+	}
+
+	setPurchaseDate() {
+		(this.purchaseDate)
+			? this.fields.purchaseDate.setValue(`${this.purchaseDate.day}/${this.purchaseDate.month}/${this.purchaseDate.year}`)
+			: this.fields.purchaseDate.setValue('')
+		this.fields.purchaseDate.markAsTouched();
 	}
 
 	doPurchase() {

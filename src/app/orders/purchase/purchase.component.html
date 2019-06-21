@@ -3,8 +3,19 @@
 <form class="w-50 mx-auto" [formGroup]="purchaseForm" (submit)="$event.preventDefault();">
 
   <div class="form-group">
-    <label for="purchaseDate">PurchaseDate</label>
-    <input type="text" id="purchaseDate" class="form-control" placeholder="PurchaseDate" formControlName="purchaseDate">
+    <div class="input-group">
+      <input class="form-control" name="purchaseDate" placeholder="Purchase Date"
+            [(ngModel)]="purchaseDate" [ngModelOptions]="{standalone: true}"
+            ngbDatepicker #purchaseDatePicker="ngbDatepicker" [firstDayOfWeek]="6"
+            (blur)="fields.purchaseDate.markAsTouched()"
+            (change)="setPurchaseDate()"
+            (dateSelect)="setPurchaseDate()">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary" (click)="purchaseDatePicker.toggle()">
+          <i class="far fa-calendar-alt"></i>
+        </button>
+      </div>
+    </div>
     <div class="alert bg-danger" *ngIf="fields.purchaseDate.invalid && fields.purchaseDate.touched">
       <div *ngIf="fields.purchaseDate.errors.required">PurchaseDate Required</div>
     </div>
