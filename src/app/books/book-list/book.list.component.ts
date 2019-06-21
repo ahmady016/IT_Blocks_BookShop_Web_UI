@@ -38,17 +38,24 @@ export class BookListComponent implements OnInit {
 		// values changes listener
 		this.fields.booksQuery.valueChanges
 			.pipe(
-				filter(Boolean),
 				debounceTime(1000),
 				distinctUntilChanged()
 			)
-			.subscribe(
-				value => this.bookSrv.query(value)
-					.subscribe(
-						console.log,
-						console.log
-					)
-			);
+			.subscribe(value => {
+				if (value === '')
+					// get all existing books
+					this.bookSrv.find()
+						.subscribe(
+							console.log,
+							console.log
+						)
+				else
+					this.bookSrv.query(value)
+						.subscribe(
+							console.log,
+							console.log
+						)
+			});
 	}
 
 	removeBook(book: Book) {
