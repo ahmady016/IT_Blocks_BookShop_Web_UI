@@ -24,7 +24,9 @@ export class OrderService {
   }
 
   private showSuccess(actionType: string): void {
-    this.toastr.success(`your ${actionType} completed successfully ...`);
+    this.toastr.success(`your ${actionType} completed successfully ...`, 'Success', {
+      progressBar: true
+    });
   }
 
   getCustomer(customerId: string) {
