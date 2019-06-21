@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
+
 import { OrderService } from 'src/app/_services';
 import { BorrowingOrder } from 'src/app/_models';
 
@@ -14,6 +16,7 @@ export class BorrowingComponent implements OnInit {
 
 	bookId: number;
 	borrowingOrder: BorrowingOrder;
+
 	fields: any = {
 		borrowingStartDate: FormControl,
 		borrowingEndDate: FormControl,
@@ -21,6 +24,9 @@ export class BorrowingComponent implements OnInit {
 		customerName: FormControl
 	}
 	borrowingForm: FormGroup;
+
+	startDate: NgbDateStruct;
+	endDate: NgbDateStruct;
 
 	constructor(
 		private orderSrv: OrderService,
@@ -41,6 +47,20 @@ export class BorrowingComponent implements OnInit {
 		this.fields.customerName = new FormControl('', Validators.required);
 		// build Angular Form
 		this.borrowingForm = new FormGroup({ ...this.fields });
+	}
+
+	setDateField(type: string) {
+		if (type === 'start') {
+			(this.startDate)
+				? this.fields.borrowingStartDate.setValue(`${this.startDate.day}/${this.startDate.month}/${this.startDate.year}`)
+				: this.fields.borrowingStartDate.setValue('')
+			this.fields.borrowingStartDate.markAsTouched();
+		} else {
+			(this.endDate)
+				? this.fields.borrowingEndDate.setValue(`${this.endDate.day}/${this.endDate.month}/${this.endDate.year}`)
+				: this.fields.borrowingEndDate.setValue('')
+			this.fields.borrowingEndDate.markAsTouched();
+		}
 	}
 
 	ngOnInit(): void {

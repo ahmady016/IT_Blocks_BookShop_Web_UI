@@ -3,16 +3,38 @@
 <form class="w-50 mx-auto" [formGroup]="borrowingForm" (submit)="$event.preventDefault();">
 
   <div class="form-group">
-    <label for="borrowingStartDate">Borrowing StartDate</label>
-    <input type="text" id="borrowingStartDate" class="form-control" placeholder="Borrowing StartDate" formControlName="borrowingStartDate">
+    <div class="input-group">
+      <input class="form-control" name="borrowingStartDate" placeholder="Borrowing StartDate"
+            [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
+            ngbDatepicker #startDatePicker="ngbDatepicker"
+            (blur)="fields.borrowingStartDate.markAsTouched()"
+            (change)="setDateField('start')"
+            (dateSelect)="setDateField('start')">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary" (click)="startDatePicker.toggle()">
+          <i class="far fa-calendar-alt"></i>
+        </button>
+      </div>
+    </div>
     <div class="alert bg-danger" *ngIf="fields.borrowingStartDate.invalid && fields.borrowingStartDate.touched">
       <div *ngIf="fields.borrowingStartDate.errors.required">Borrowing StartDate Required</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="borrowingEndDate">Borrowing EndDate</label>
-    <input type="text" id="borrowingEndDate" class="form-control" placeholder="Borrowing EndDate" formControlName="borrowingEndDate">
+    <div class="input-group">
+      <input class="form-control" name="borrowingEndDate" placeholder="Borrowing EndDate"
+            [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
+            ngbDatepicker #endDatePicker="ngbDatepicker"
+            (blur)="fields.borrowingEndDate.markAsTouched()"
+            (change)="setDateField('end')"
+            (dateSelect)="setDateField('end')">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary" (click)="endDatePicker.toggle()">
+          <i class="far fa-calendar-alt"></i>
+        </button>
+      </div>
+    </div>
     <div class="alert bg-danger" *ngIf="fields.borrowingEndDate.invalid && fields.borrowingEndDate.touched">
       <div *ngIf="fields.borrowingEndDate.errors.required">Borrowing EndDate Required</div>
     </div>
