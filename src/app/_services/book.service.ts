@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { env } from '../../environments/environment';
 import { DateService } from './date.service';
@@ -19,7 +20,8 @@ export class BookService {
 
   constructor(
     private http: HttpClient,
-    private dateSrv: DateService
+    private dateSrv: DateService,
+    private toastr: ToastrService
   ) {
     this.booksSubject = new BehaviorSubject<Book[]>([]);
     this.currentBookSubject = new BehaviorSubject<Book>(null);
@@ -45,8 +47,7 @@ export class BookService {
         map(books => {
           this.booksSubject.next(books);
           return books;
-        }),
-        catchError(err => of({ err }))
+        })
       );
   }
 
@@ -57,8 +58,7 @@ export class BookService {
           map(books => {
             this.booksSubject.next(books);
             return books;
-          }),
-          catchError(err => of({ err }))
+          })
         );
     } else {
       this.setCurrentBook(bookId);
@@ -69,8 +69,7 @@ export class BookService {
               this.booksSubject.next([...this.books, book]);
               this.currentBookSubject.next(book);
               return book;
-            }),
-            catchError(err => of({ err }))
+            })
           );
       }
     }
@@ -85,9 +84,11 @@ export class BookService {
       .pipe(
         map(book => {
           this.booksSubject.next([...this.books, book]);
+          this.toastr.success('The book is added successfully ...', 'Success', {
+            progressBar: true
+          });
           return book;
-        }),
-        catchError(err => of({ err }))
+        })
       );
   }
 
@@ -106,9 +107,11 @@ export class BookService {
               return book;
             })
           );
+          this.toastr.success('The book is updated successfully ...', 'Success', {
+            progressBar: true
+          });
           return book;
-        }),
-        catchError(err => of({ err }))
+        })
       );
   }
 
@@ -117,9 +120,11 @@ export class BookService {
       .pipe(
         map(deleteResult => {
           this.booksSubject.next(this.books.filter(book => book.bookId !== deleteResult.bookId));
+          this.toastr.success('The book is deleted successfully ...', 'Success', {
+            progressBar: true
+          });
           return book;
-        }),
-        catchError(err => of({ err }))
+        })
       );
   }
 
