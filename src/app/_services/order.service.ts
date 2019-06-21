@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { env } from '../../environments/environment';
 import { AuthUser, PurchaseOrder, BorrowingOrder } from 'src/app/_models';
@@ -11,39 +11,28 @@ import LS from '../localStorage';
 @Injectable({ providedIn: 'root' })
 export class OrderService {
 
-  private orderSubject: BehaviorSubject<string>;
   private currentUser: AuthUser = null;
-  public orderError: any = null;
 
-  constructor(private http: HttpClient) {
-    this.orderSubject = new BehaviorSubject<string>('');
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {
     this.currentUser = LS.get('currentUser');
   }
 
-  public get orderStatus(): string {
-    return this.orderSubject.value;
-  }
-
-  private setOrderStatus(actionType: string): void {
-    this.orderSubject.next(`your ${actionType} completed successfully ...`);
-    setTimeout(() => this.orderSubject.next(''), 5000)
+  private showSuccess(actionType: string): void {
+    this.toastr.success(`your ${actionType} completed successfully ...`);
   }
 
   doPurchase(purchase: PurchaseOrder) {
     if(this.currentUser)
       purchase.userId = this.currentUser.user.userId;
 
-    console.log("TCL: OrderService -> doPurchase -> purchase", purchase);
-
     return this.http.post<any>(`${env.API_URL}/purchases/add`, purchase)
       .pipe(
         map(purchase => {
-          this.setOrderStatus('purchase');
+          this.showSuccess('purchase');
           return purchase;
-        }),
-        catchError(res => {
-          this.orderError = res.error
-          return of(res.error)
         })
       );
   }
@@ -51,15 +40,12 @@ export class OrderService {
   doBorrowing(borrowing: BorrowingOrder) {
     if(this.currentUser)
       borrowing.userId = this.currentUser.user.userId;
+
     return this.http.post<any>(`${env.API_URL}/borrowings/add`, borrowing)
       .pipe(
         map(borrowing => {
-          this.setOrderStatus('borrowing');
+          this.showSuccess('borrowing');
           return borrowing;
-        }),
-        catchError(res => {
-          this.orderError = res.error
-          return of(res.error)
         })
       );
   }
