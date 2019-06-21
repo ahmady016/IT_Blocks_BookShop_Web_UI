@@ -6,13 +6,14 @@ import { ToastrService } from 'ngx-toastr';
 
 import { env } from '../../environments/environment';
 import { DateService } from './date.service';
-import { AuthUser, PurchaseOrder, BorrowingOrder } from 'src/app/_models';
+import { AuthUser, PurchaseOrder, BorrowingOrder, Customer } from 'src/app/_models';
 import LS from '../localStorage';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
 
   private currentUser: AuthUser = null;
+  public currentCustomer: Customer = null;
 
   constructor(
     private http: HttpClient,
@@ -24,6 +25,16 @@ export class OrderService {
 
   private showSuccess(actionType: string): void {
     this.toastr.success(`your ${actionType} completed successfully ...`);
+  }
+
+  getCustomer(customerId: string) {
+    return this.http.get<Customer>(`${env.API_URL}/customers/${customerId}`)
+      .pipe(
+        map(customer => {
+          this.currentCustomer = customer;
+          return customer;
+        })
+      )
   }
 
   doPurchase(purchase: PurchaseOrder) {

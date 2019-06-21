@@ -1,5 +1,5 @@
 export interface Customer {
-  customerId?: number;
+  customerId?: string;
   customerName: string;
   birthDate?: Date | string;
   userId?: number;

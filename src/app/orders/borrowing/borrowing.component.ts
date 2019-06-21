@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
 
 import { OrderService } from 'src/app/_services';
@@ -33,13 +34,19 @@ export class BorrowingComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute
 	) {
+		// get the bookId from route params
 		this.route.params.subscribe(route => {
 			if (route.bookId)
 				this.bookId = +route.bookId;
 		});
 	}
 
-	createForm() {
+	private _setCustomerName(customerName: string) {
+		this.fields.customerName.setValue(customerName);
+		this.fields.customerName.markAsTouched();
+	}
+
+	private _createForm() {
 		// build form fields
 		this.fields.borrowingStartDate = new FormControl('', Validators.required);
 		this.fields.borrowingEndDate = new FormControl('', Validators.required);
@@ -64,23 +71,49 @@ export class BorrowingComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.createForm();
+		this._createForm();
+		// listen from customerId changes
+		this.fields.customerId.valueChanges
+			.pipe(
+				debounceTime(1000),
+				distinctUntilChanged(),
+				filter((value: string) => value.length === 14)
+			)
+			.subscribe(value => {
+				this.orderSrv.getCustomer(value)
+					.subscribe(
+						_ => {
+							if (this.orderSrv.currentCustomer)
+								this._setCustomerName(this.orderSrv.currentCustomer.customerName)
+						},
+						console.log
+					)
+			})
 	}
 
 	doBorrowing() {
 		if (this.borrowingForm.invalid || !this.bookId)
 			return;
-		// add the newBoo
-		this.borrowingOrder = {
-			borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
-			borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
-			bookId: this.bookId,
-			customer: {
-				customerId: this.borrowingForm.value.customerId,
-				customerName: this.borrowingForm.value.customerName
+		// build the borrowing order
+		if (this.orderSrv.currentCustomer) {
+			this.borrowingOrder = {
+				borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
+				borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
+				bookId: this.bookId,
+				customerId: this.orderSrv.currentCustomer.customerId
 			}
-		};
-		// save the purchase order
+		} else {
+			this.borrowingOrder = {
+				borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
+				borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
+				bookId: this.bookId,
+				customer: {
+					customerId: this.borrowingForm.value.customerId,
+					customerName: this.borrowingForm.value.customerName
+				}
+			};
+		}
+		// save the borrowing order
 		this.orderSrv.doBorrowing(this.borrowingOrder)
 			.subscribe(
 				_ => this.router.navigate(["/books"]),

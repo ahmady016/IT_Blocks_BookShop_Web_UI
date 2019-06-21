@@ -56,12 +56,20 @@
     </div>
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-warning btn-lg w-50"
-    [disabled]="borrowingForm.invalid"
-    (click)="doBorrowing()">
-    Borrowing
-  </button>
+  <div class="flex-around">
+    <button
+      type="submit"
+      class="btn btn-warning btn-lg flex-b-40"
+      [disabled]="borrowingForm.invalid"
+      (click)="doBorrowing()">
+      Borrowing
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger btn-lg flex-b-40"
+      (click)="cancel()">
+      Cancel
+    </button>
+  </div>
 
 </form>

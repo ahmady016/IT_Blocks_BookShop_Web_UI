@@ -53,12 +53,20 @@
     </div>
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-warning btn-lg w-50"
-    [disabled]="purchaseForm.invalid"
-    (click)="doPurchase()">
-    Purchase
-  </button>
+  <div class="flex-around">
+    <button
+      type="submit"
+      class="btn btn-warning btn-lg flex-b-40"
+      [disabled]="purchaseForm.invalid"
+      (click)="doPurchase()">
+      Purchase
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger btn-lg flex-b-40"
+      (click)="cancel()">
+      Cancel
+    </button>
+  </div>
 
 </form>

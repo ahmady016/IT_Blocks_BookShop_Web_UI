@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { OrderService } from 'src/app/_services';
@@ -38,7 +39,12 @@ export class PurchaseComponent implements OnInit {
 		});
 	}
 
-	createForm() {
+	private _setCustomerName(customerName: string) {
+		this.fields.customerName.setValue(customerName);
+		this.fields.customerName.markAsTouched();
+	}
+
+	private _createForm() {
 		// build form fields
 		this.fields.purchaseDate = new FormControl('', Validators.required);
 		this.fields.quantity = new FormControl('', Validators.required);
@@ -49,10 +55,6 @@ export class PurchaseComponent implements OnInit {
 		this.purchaseForm = new FormGroup({ ...this.fields });
 	}
 
-	ngOnInit(): void {
-		this.createForm();
-	}
-
 	setPurchaseDate() {
 		(this.purchaseDate)
 			? this.fields.purchaseDate.setValue(`${this.purchaseDate.day}/${this.purchaseDate.month}/${this.purchaseDate.year}`)
@@ -60,20 +62,51 @@ export class PurchaseComponent implements OnInit {
 		this.fields.purchaseDate.markAsTouched();
 	}
 
+	ngOnInit(): void {
+		this._createForm();
+		// listen from customerId changes
+		this.fields.customerId.valueChanges
+			.pipe(
+				debounceTime(1000),
+				distinctUntilChanged(),
+				filter((value: string) => value.length === 14)
+			)
+			.subscribe(value => {
+				this.orderSrv.getCustomer(value)
+					.subscribe(
+						_ => {
+							if (this.orderSrv.currentCustomer)
+								this._setCustomerName(this.orderSrv.currentCustomer.customerName)
+						},
+						console.log
+					)
+			})
+	}
+
 	doPurchase() {
 		if (this.purchaseForm.invalid || !this.bookId)
 			return;
-		// add the newBoo
-		this.purchaseOrder = {
-			purchaseDate: this.purchaseForm.value.purchaseDate,
-			quantity: this.purchaseForm.value.quantity,
-			paidAmount: this.purchaseForm.value.paidAmount,
-			bookId: this.bookId,
-			customer: {
-				customerId: this.purchaseForm.value.customerId,
-				customerName: this.purchaseForm.value.customerName
-			}
-		};
+		// build the purchase order
+		if (this.orderSrv.currentCustomer) {
+			this.purchaseOrder = {
+				purchaseDate: this.purchaseForm.value.purchaseDate,
+				quantity: this.purchaseForm.value.quantity,
+				paidAmount: this.purchaseForm.value.paidAmount,
+				bookId: this.bookId,
+				customerId: this.orderSrv.currentCustomer.customerId
+			};
+		} else {
+			this.purchaseOrder = {
+				purchaseDate: this.purchaseForm.value.purchaseDate,
+				quantity: this.purchaseForm.value.quantity,
+				paidAmount: this.purchaseForm.value.paidAmount,
+				bookId: this.bookId,
+				customer: {
+					customerId: this.purchaseForm.value.customerId,
+					customerName: this.purchaseForm.value.customerName
+				}
+			};
+		}
 		// save the purchase order
 		this.orderSrv.doPurchase(this.purchaseOrder)
 			.subscribe(

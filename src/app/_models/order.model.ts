@@ -7,7 +7,8 @@ export interface PurchaseOrder {
   paidAmount: number;
   bookId?: number;
   userId?: number;
-  customer: Customer;
+  customerId?: string | null;
+  customer?: Customer;
 }
 
 export interface BorrowingOrder {
@@ -15,7 +16,7 @@ export interface BorrowingOrder {
   borrowingStartDate: Date | string;
   borrowingEndDate: Date | string;
   bookId?: number | null;
-  customerId?: number | null;
   userId?: number | null;
-  customer: Customer;
+  customerId?: string | null;
+  customer?: Customer;
 }
