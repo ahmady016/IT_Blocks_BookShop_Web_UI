@@ -6,7 +6,7 @@
     <div class="input-group">
       <input class="form-control" name="borrowingStartDate" placeholder="Borrowing StartDate"
             [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
-            ngbDatepicker #startDatePicker="ngbDatepicker"
+            ngbDatepicker #startDatePicker="ngbDatepicker" [firstDayOfWeek]="6"
             (blur)="fields.borrowingStartDate.markAsTouched()"
             (change)="setDateField('start')"
             (dateSelect)="setDateField('start')">
@@ -25,7 +25,7 @@
     <div class="input-group">
       <input class="form-control" name="borrowingEndDate" placeholder="Borrowing EndDate"
             [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
-            ngbDatepicker #endDatePicker="ngbDatepicker"
+            ngbDatepicker #endDatePicker="ngbDatepicker" [firstDayOfWeek]="6"
             (blur)="fields.borrowingEndDate.markAsTouched()"
             (change)="setDateField('end')"
             (dateSelect)="setDateField('end')">
