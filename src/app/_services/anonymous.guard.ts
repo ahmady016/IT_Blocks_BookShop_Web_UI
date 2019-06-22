@@ -19,11 +19,10 @@ export class AnonymousGuard implements CanActivate {
   ) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    // handle any redirects if a user isn't authenticated
-    if (this.auth.currentUser) {
-      this.router.navigate(['books']);
-      return false;
-    }
-    return true;
+    // handle any redirects if a user is authenticated
+    if (!this.auth.currentUser)
+      return true;
+    this.router.navigate(['books']);
+    return false;
   };
 }
