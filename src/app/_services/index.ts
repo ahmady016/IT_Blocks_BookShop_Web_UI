@@ -1,4 +1,5 @@
 import { AuthService } from './auth.service';
+import { AnonymousGuard } from './anonymous.guard';
 import { AuthGuard } from './auth.guard';
 import { BookService } from './book.service';
 import { DateService } from './date.service';
@@ -8,6 +9,7 @@ import { ErrorInterceptor } from './error.interceptor';
 
 export {
   AuthGuard,
+  AnonymousGuard,
   AuthService,
   BookService,
   DateService,
