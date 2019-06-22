@@ -5,20 +5,24 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { AuthGuard, AnonymousGuard } from '@services/index';
+
 import { SignInComponent } from './users/sign-in/sign.in.component';
 import { SignUpComponent } from './users/sign-up/sign.up.component';
+import { AuthorListComponent } from './authors/author-list/author.list.component';
+import { AuthorFormComponent } from './authors/author-form/author.form.component';
 import { BookListComponent } from './books/book-list/book.list.component';
+import { BookFormComponent } from './books/book-form/book.form.component';
 import { BorrowingComponent } from './orders/borrowing/borrowing.component';
 import { PurchaseComponent } from './orders/purchase/purchase.component';
 import { PageNotFoundComponent } from './page.not.found.component';
-import { BookFormComponent } from './books/book-form/book.form.component';
-
-import { AuthGuard } from './_services/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'books', pathMatch: 'full' },
-  { path: 'sign-in', component: SignInComponent },
-  { path: 'sign-up', component: SignUpComponent },
+  { path: 'sign-up', component: SignUpComponent, canActivate: [AnonymousGuard] },
+  { path: 'sign-in', component: SignInComponent, canActivate: [AnonymousGuard] },
+  { path: 'authors', component: AuthorListComponent, canActivate: [AuthGuard]  },
+  { path: 'author-form/:type/:authorId', component: AuthorFormComponent, canActivate: [AuthGuard] },
   { path: 'books', component: BookListComponent, canActivate: [AuthGuard]  },
   { path: 'book-form/:type/:bookId', component: BookFormComponent, canActivate: [AuthGuard] },
   { path: 'purchase/:bookId', component: PurchaseComponent, canActivate: [AuthGuard]  },
@@ -30,6 +34,8 @@ const routes: Routes = [
   declarations: [
     SignInComponent,
     SignUpComponent,
+    AuthorListComponent,
+    AuthorFormComponent,
     BookListComponent,
     BookFormComponent,
     PurchaseComponent,
@@ -49,6 +55,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     SignInComponent,
     SignUpComponent,
+    AuthorListComponent,
+    AuthorFormComponent,
     BookListComponent,
     BookFormComponent,
     PurchaseComponent,
