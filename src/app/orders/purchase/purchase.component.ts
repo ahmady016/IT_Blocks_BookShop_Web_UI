@@ -40,8 +40,15 @@ export class PurchaseComponent implements OnInit {
 	}
 
 	private _setCustomerName(customerName: string) {
-		this.fields.customerName.setValue(customerName);
-		this.fields.customerName.markAsTouched();
+		if (customerName) {
+			this.fields.customerName.setValue(customerName);
+			this.fields.customerName.disable();
+			this.fields.customerName.markAsTouched();
+		} else {
+			this.fields.customerName.setValue(customerName);
+			this.fields.customerName.enable();
+			this.fields.customerName.markAsUntouched();
+		}
 	}
 
 	private _createForm() {
@@ -68,18 +75,21 @@ export class PurchaseComponent implements OnInit {
 		this.fields.customerId.valueChanges
 			.pipe(
 				debounceTime(1000),
-				distinctUntilChanged(),
-				filter((value: string) => value.length === 14)
+				distinctUntilChanged()
 			)
 			.subscribe(value => {
-				this.orderSrv.getCustomer(value)
-					.subscribe(
-						_ => {
-							if (this.orderSrv.currentCustomer)
-								this._setCustomerName(this.orderSrv.currentCustomer.customerName)
-						},
-						console.log
-					)
+				if (!value)
+					this._setCustomerName('')
+				else if (value.length === 14) {
+					this.orderSrv.getCustomer(value)
+						.subscribe(
+							_ => {
+								if (this.orderSrv.currentCustomer)
+									this._setCustomerName(this.orderSrv.currentCustomer.customerName)
+							},
+							console.log
+						)
+				}
 			})
 	}
 
@@ -87,24 +97,18 @@ export class PurchaseComponent implements OnInit {
 		if (this.purchaseForm.invalid || !this.bookId)
 			return;
 		// build the purchase order
+		this.purchaseOrder = {
+			purchaseDate: this.purchaseForm.value.purchaseDate,
+			quantity: this.purchaseForm.value.quantity,
+			paidAmount: this.purchaseForm.value.paidAmount,
+			bookId: this.bookId
+		};
 		if (this.orderSrv.currentCustomer) {
-			this.purchaseOrder = {
-				purchaseDate: this.purchaseForm.value.purchaseDate,
-				quantity: this.purchaseForm.value.quantity,
-				paidAmount: this.purchaseForm.value.paidAmount,
-				bookId: this.bookId,
-				customerId: this.orderSrv.currentCustomer.customerId
-			};
+			this.purchaseOrder.customerId = this.orderSrv.currentCustomer.customerId;
 		} else {
-			this.purchaseOrder = {
-				purchaseDate: this.purchaseForm.value.purchaseDate,
-				quantity: this.purchaseForm.value.quantity,
-				paidAmount: this.purchaseForm.value.paidAmount,
-				bookId: this.bookId,
-				customer: {
-					customerId: this.purchaseForm.value.customerId,
-					customerName: this.purchaseForm.value.customerName
-				}
+			this.purchaseOrder.customer = {
+				customerId: this.purchaseForm.value.customerId,
+				customerName: this.purchaseForm.value.customerName
 			};
 		}
 		// save the purchase order

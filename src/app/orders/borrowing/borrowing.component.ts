@@ -42,8 +42,15 @@ export class BorrowingComponent implements OnInit {
 	}
 
 	private _setCustomerName(customerName: string) {
-		this.fields.customerName.setValue(customerName);
-		this.fields.customerName.markAsTouched();
+		if (customerName) {
+			this.fields.customerName.setValue(customerName);
+			this.fields.customerName.disable();
+			this.fields.customerName.markAsTouched();
+		} else {
+			this.fields.customerName.setValue(customerName);
+			this.fields.customerName.enable();
+			this.fields.customerName.markAsUntouched();
+		}
 	}
 
 	private _createForm() {
@@ -76,18 +83,21 @@ export class BorrowingComponent implements OnInit {
 		this.fields.customerId.valueChanges
 			.pipe(
 				debounceTime(1000),
-				distinctUntilChanged(),
-				filter((value: string) => value.length === 14)
+				distinctUntilChanged()
 			)
 			.subscribe(value => {
-				this.orderSrv.getCustomer(value)
-					.subscribe(
-						_ => {
-							if (this.orderSrv.currentCustomer)
-								this._setCustomerName(this.orderSrv.currentCustomer.customerName)
-						},
-						console.log
-					)
+				if (!value)
+					this._setCustomerName('')
+				else if (value.length === 14) {
+					this.orderSrv.getCustomer(value)
+						.subscribe(
+							_ => {
+								if (this.orderSrv.currentCustomer)
+									this._setCustomerName(this.orderSrv.currentCustomer.customerName)
+							},
+							console.log
+						)
+				}
 			})
 	}
 
@@ -95,22 +105,17 @@ export class BorrowingComponent implements OnInit {
 		if (this.borrowingForm.invalid || !this.bookId)
 			return;
 		// build the borrowing order
+		this.borrowingOrder = {
+			borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
+			borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
+			bookId: this.bookId
+		}
 		if (this.orderSrv.currentCustomer) {
-			this.borrowingOrder = {
-				borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
-				borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
-				bookId: this.bookId,
-				customerId: this.orderSrv.currentCustomer.customerId
-			}
+			this.borrowingOrder.customerId = this.orderSrv.currentCustomer.customerId;
 		} else {
-			this.borrowingOrder = {
-				borrowingStartDate: this.borrowingForm.value.borrowingStartDate,
-				borrowingEndDate: this.borrowingForm.value.borrowingEndDate,
-				bookId: this.bookId,
-				customer: {
-					customerId: this.borrowingForm.value.customerId,
-					customerName: this.borrowingForm.value.customerName
-				}
+			this.borrowingOrder.customer = {
+				customerId: this.borrowingForm.value.customerId,
+				customerName: this.borrowingForm.value.customerName
 			};
 		}
 		// save the borrowing order
