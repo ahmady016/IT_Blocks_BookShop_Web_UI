@@ -4,9 +4,6 @@
     placeholder="Find your book ..." formControlName="booksQuery" />
 </form>
 <hr />
-<div *ngIf="orderSrv.orderStatus" class="alert alert-info">
-  {{orderSrv.orderStatus}}
-</div>
 <div class="row">
   <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let book of bookSrv.books">
     <div class="card">
