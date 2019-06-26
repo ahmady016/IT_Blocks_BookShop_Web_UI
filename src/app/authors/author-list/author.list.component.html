@@ -7,13 +7,13 @@
 <div class="row">
   <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let author of authorSrv.authors">
     <div class="card">
-      <div class="card-header flex-around text-light">
+      <div class="card-header flex-around">
         <a [routerLink]="['/author-form/view/', author.authorId]">
           <i class="fas fa-user-tie display-3"></i>
         </a>
         <div>
           <h5 class="card-title">
-            <a [routerLink]="['/author-form/view/', author.authorId]" class="text-light">{{ author.authorName }}</a>
+            <a [routerLink]="['/author-form/view/', author.authorId]">{{ author.authorName }}</a>
           </h5>
           <p class="card-text">{{ author.birthDate }}</p>
         </div>
