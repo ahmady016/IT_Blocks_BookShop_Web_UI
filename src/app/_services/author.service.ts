@@ -42,7 +42,7 @@ export class AuthorService {
   }
 
   query(value: string) {
-    return this.http.get<Author[]>(`${env.API_URL}/authors/query?filters=title|%|${value}`)
+    return this.http.get<Author[]>(`${env.API_URL}/authors/query?filters=authorName|%|${value}`)
       .pipe(
         map(authors => {
           authors.forEach(author => author.birthDate = (new Date(author.birthDate)).toLocaleDateString('en-gb'))
@@ -121,7 +121,7 @@ export class AuthorService {
   }
 
   delete(deleteType: string, author: Author) {
-    return this.http.post<Author>(`${env.API_URL}/books/delete?deleteType=${deleteType}`, author)
+    return this.http.post<Author>(`${env.API_URL}/authors/delete?deleteType=${deleteType}`, author)
       .pipe(
         map(deleteResult => {
           this.authorsSubject.next(this.authors.filter(book => book.authorId !== deleteResult.authorId));

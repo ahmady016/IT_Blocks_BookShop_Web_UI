@@ -118,11 +118,13 @@ export class AuthorFormComponent implements OnInit {
 	}
 
 	private _setFormValues(author: Author) {
-		this.fields.title.setValue(author.authorName)
-		this.fields.day.setValue(new Date(author.birthDate).getDate() )
-		this.fields.month.setValue(new Date(author.birthDate).getMonth() )
-		this.fields.year.setValue(new Date(author.birthDate).getFullYear() )
-		this.fields.publishedDate.setValue(author.birthDate)
+		this.fields.authorName.setValue(author.authorName)
+		this.fields.day.setValue(new Date(author.birthDate).getDate())
+		this.fields.month.setValue(new Date(author.birthDate).getMonth())
+		this.fields.year.setValue(new Date(author.birthDate).getFullYear())
+		this.fields.birthDate.setValue(author.birthDate)
+		if (this.readonly)
+			Object.keys(this.fields).forEach(key => this.fields[key].disable())
 	}
 
 	save() {
