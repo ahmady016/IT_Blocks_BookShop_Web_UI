@@ -1,0 +1,43 @@
+<form class="w-50 mx-auto" [formGroup]="authorForm" (submit)="$event.preventDefault();">
+
+  <div class="form-group">
+    <label for="authorName">Author Name</label>
+    <input type="text" id="authorName" class="form-control" placeholder="Author Name" formControlName="authorName">
+    <div class="alert bg-danger" *ngIf="fields.authorName.invalid && fields.authorName.touched">
+      <div *ngIf="fields.authorName.errors.required">Author Name Required</div>
+    </div>
+  </div>
+
+  <label for="birthDate">Birth Date</label>
+  <div class="form-group d-flex justify-content-between">
+    <select class="w-25 custom-select" formControlName="day">
+      <option value="">Day</option>
+      <option *ngFor="let day of days" [value]="day">
+        {{day}}
+      </option>
+    </select>
+    <select class="w-25 custom-select" formControlName="month">
+      <option value="">Month</option>
+      <option *ngFor="let month of months" [value]="month[0]">
+        {{month[1]}}
+      </option>
+    </select>
+    <select class="w-25 custom-select" formControlName="year">
+      <option value="">Year</option>
+      <option *ngFor="let year of years" [value]="year">
+        {{year}}
+      </option>
+    </select>
+  </div>
+  <input type="hidden" formControlName="birthDate" [value]="fields.birthDate">
+  <div class="alert bg-danger" *ngIf="fields.birthDate.invalid && fields.birthDate.touched">Invalid Date ...</div>
+
+  <button *ngIf="!readonly"
+    type="button"
+    class="btn btn-warning btn-lg w-50"
+    [disabled]="authorForm.invalid"
+    (click)="save()">
+    Save Author
+  </button>
+
+</form>
