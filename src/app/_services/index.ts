@@ -1,6 +1,7 @@
 import { AuthService } from './auth.service';
 import { AnonymousGuard } from './anonymous.guard';
 import { AuthGuard } from './auth.guard';
+import { AuthorService } from './author.service';
 import { BookService } from './book.service';
 import { DateService } from './date.service';
 import { OrderService } from './order.service';
@@ -11,6 +12,7 @@ export {
   AuthGuard,
   AnonymousGuard,
   AuthService,
+  AuthorService,
   BookService,
   DateService,
   OrderService,
