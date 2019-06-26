@@ -45,6 +45,7 @@ export class AuthorService {
     return this.http.get<Author[]>(`${env.API_URL}/authors/query?filters=title|%|${value}`)
       .pipe(
         map(authors => {
+          authors.forEach(author => author.birthDate = (new Date(author.birthDate)).toLocaleDateString('en-gb'))
           this.authorsSubject.next(authors);
           return authors;
         })
@@ -55,9 +56,10 @@ export class AuthorService {
     if (!authorId) {
       return this.http.get<Author[]>(`${env.API_URL}/authors/list/existing`)
         .pipe(
-          map(books => {
-            this.authorsSubject.next(books);
-            return books;
+          map(authors => {
+            authors.forEach(author => author.birthDate = (new Date(author.birthDate)).toLocaleDateString('en-gb'))
+            this.authorsSubject.next(authors);
+            return authors;
           })
         );
     } else {
@@ -66,6 +68,7 @@ export class AuthorService {
         return this.http.get<Author>(`${env.API_URL}/authors/${authorId}`)
           .pipe(
             map(author => {
+              author.birthDate = (new Date(author.birthDate)).toLocaleDateString('en-gb')
               this.authorsSubject.next([...this.authors, author]);
               this.currentAuthorSubject.next(author);
               return author;
@@ -83,6 +86,7 @@ export class AuthorService {
     return this.http.post<Author>(`${env.API_URL}/authors/add`, author)
       .pipe(
         map(author => {
+          author.birthDate = (new Date(author.birthDate)).toLocaleDateString('en-gb')
           this.authorsSubject.next([...this.authors, author]);
           this.toastr.success('The Author is added successfully ...', 'Success', {
             progressBar: true
@@ -100,6 +104,7 @@ export class AuthorService {
     return this.http.put<Author>(`${env.API_URL}/authors/update`, author)
       .pipe(
         map(updatedAuthor => {
+          updatedAuthor.birthDate = (new Date(updatedAuthor.birthDate)).toLocaleDateString('en-gb')
           this.authorsSubject.next(
             this.authors.map(author => {
               if (author.authorId === updatedAuthor.authorId)
