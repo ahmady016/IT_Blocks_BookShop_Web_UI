@@ -53,6 +53,23 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="authors">Authors</label>
+    <ng-multiselect-dropdown
+      placeholder="Authors"
+      [data]="authorSrv.authors"
+      [settings]="dropdownSettings"
+      (onSelect)="onAuthorSelected($event)"
+      (onSelectAll)="onSelectAllAuthors($event)"
+      (onDeSelect)="onAuthorDeSelected($event)"
+      (onDeSelectAll)="onDeSelectAllAuthors($event)"
+    >
+    </ng-multiselect-dropdown>
+    <div class="alert bg-danger" *ngIf="fields.authors.invalid && fields.authors.touched">
+      <div *ngIf="fields.authors.errors.required">Authors Required</div>
+    </div>
+  </div>
+
   <label for="birthDate">Published Date</label>
   <div class="form-group d-flex justify-content-between">
     <select class="w-25 custom-select" formControlName="day">

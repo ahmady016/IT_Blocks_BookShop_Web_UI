@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { BookService, DateService } from 'src/app/_services';
-import { Book } from 'src/app/_models';
+import { BookService, AuthorService, DateService } from 'src/app/_services';
+import { Book, Author } from 'src/app/_models';
 
 @Component({
 	selector: 'book-form',
@@ -24,7 +24,6 @@ export class BookFormComponent implements OnInit {
 	months: Array<string>[];
 	years: string[];
 	// Angular Form and its Controls
-	bookForm: FormGroup;
 	fields: any = {
 		title: FormControl,
 		subtitle: FormControl,
@@ -33,14 +32,26 @@ export class BookFormComponent implements OnInit {
 		pageCount: FormControl,
 		inventoryCount: FormControl,
 		unitPrice: FormControl,
+		authors: FormControl,
 		day: FormControl,
 		month: FormControl,
 		year: FormControl,
 		publishedDate: FormControl // hold the complete publishedDate
 	}
+	bookForm: FormGroup;
+	// ng-multiselect-dropdown props
+	dropdownSettings: any = {
+		idField: 'authorId',
+		textField: 'authorName',
+		selectAllText: 'Select All',
+		unSelectAllText: 'UnSelect All',
+		allowSearchFilter: true,
+		singleSelection: false,
+	}
 
 	constructor(
 		private bookSrv: BookService,
+		private authorSrv: AuthorService,
 		private dateSrv: DateService,
 		private router: Router,
 		private route: ActivatedRoute
@@ -48,6 +59,7 @@ export class BookFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this._initForm();
+		this._initDropdown();
 		this.route.params.subscribe(route => {
 			if (route.type === 'view')
 				this.readonly = true;
@@ -63,6 +75,14 @@ export class BookFormComponent implements OnInit {
 					);
 			}
 		});
+	}
+
+	private _initDropdown() {
+		this.authorSrv.find()
+			.subscribe(
+				console.log,
+				console.log
+			)
 	}
 
 	private _createForm() {
@@ -95,6 +115,10 @@ export class BookFormComponent implements OnInit {
 			Validators.required
 		);
 		this.fields.unitPrice = new FormControl(
+			{ value: '', disabled: this.readonly },
+			Validators.required
+		);
+		this.fields.authors = new FormControl(
 			{ value: '', disabled: this.readonly },
 			Validators.required
 		);
@@ -154,10 +178,46 @@ export class BookFormComponent implements OnInit {
 		this.fields.pageCount.setValue(book.pageCount)
 		this.fields.inventoryCount.setValue(book.inventoryCount)
 		this.fields.unitPrice.setValue(book.unitPrice)
+		this.fields.authors.setValue(book.authors)
 		this.fields.day.setValue(new Date(book.publishedDate).getDate() )
 		this.fields.month.setValue(new Date(book.publishedDate).getMonth() )
 		this.fields.year.setValue(new Date(book.publishedDate).getFullYear() )
 		this.fields.publishedDate.setValue(book.publishedDate)
+		if (this.readonly)
+			Object.keys(this.fields).forEach(key => this.fields[key].disable())
+	}
+
+	onAuthorSelected(author: Author) {
+		this.fields.authors.setValue(
+			(this.fields.authors.value)
+				? `${this.fields.authors.value},${author.authorId}`
+				: author.authorId
+		)
+		this.fields.authors.markAsTouched()
+  }
+	onAuthorDeSelected(author: Author) {
+		this.fields.authors.setValue(
+			this.fields.authors.value
+				.split(',')
+				.map(Number)
+				.filter(id => id !== author.authorId)
+				.join(',')
+		)
+		this.fields.authors.markAsTouched()
+	}
+	onSelectAllAuthors(authors: Author[]) {
+		this.fields.authors.setValue(
+			authors.reduce((authors, author) => {
+				return (authors)
+					? `${authors},${author.authorId}`
+					: author.authorId
+			}, '')
+		)
+		this.fields.authors.markAsTouched()
+	}
+	onDeSelectAllAuthors(authors: Author[]) {
+		this.fields.authors.setValue('')
+		this.fields.authors.markAsTouched()
 	}
 
 	save() {
