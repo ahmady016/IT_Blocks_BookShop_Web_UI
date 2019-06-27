@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AuthGuard, AnonymousGuard } from '@services/index';
 
@@ -46,6 +47,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     NgbDatepickerModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],

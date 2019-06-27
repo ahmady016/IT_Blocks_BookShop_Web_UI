@@ -33,11 +33,11 @@ export class AuthorService {
     return this.authorsSubject.value;
   }
 
-  public get currentBook(): Author {
+  public get currentAuthor(): Author {
     return this.currentAuthorSubject.value;
   }
 
-  private setCurrentBook(authorId: number) {
+  private setCurrentAuthor(authorId: number) {
     this.currentAuthorSubject.next(this.authorsSubject.value.find(author => author.authorId === authorId));
   }
 
@@ -63,8 +63,8 @@ export class AuthorService {
           })
         );
     } else {
-      this.setCurrentBook(authorId);
-      if (!this.currentBook) {
+      this.setCurrentAuthor(authorId);
+      if (!this.currentAuthor) {
         return this.http.get<Author>(`${env.API_URL}/authors/${authorId}`)
           .pipe(
             map(author => {
