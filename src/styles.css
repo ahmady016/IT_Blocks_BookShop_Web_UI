@@ -2,6 +2,8 @@
 @import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
 /* font awesome icons v5.5.0 */
 @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
+/* animate.css styles */
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css';
 /* ngx-toastr styles */
 @import '../node_modules/ngx-toastr/toastr.css';
 

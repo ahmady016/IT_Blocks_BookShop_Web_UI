@@ -11,22 +11,22 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="nav nav-tabs">
         <li class="nav-item" *ngIf="!authSrv.currentUser">
-          <a class="nav-link" routerLink="/sign-in" routerLinkActive="active">SignIn</a>
+          <a class="nav-link animated" routerLink="/sign-in" routerLinkActive="active tada">SignIn</a>
         </li>
         <li class="nav-item" *ngIf="!authSrv.currentUser">
-          <a class="nav-link" routerLink="/sign-up" routerLinkActive="active">SignUp</a>
+          <a class="nav-link animated" routerLink="/sign-up" routerLinkActive="active tada">SignUp</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link" routerLink="/authors" routerLinkActive="active">Authors</a>
+          <a class="nav-link animated" routerLink="/authors" routerLinkActive="active tada">Authors</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link" routerLink="/author-form/new/0" routerLinkActive="active">New Author</a>
+          <a class="nav-link animated" routerLink="/author-form/new/0" routerLinkActive="active tada">New Author</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link" routerLink="/books" routerLinkActive="active">Books</a>
+          <a class="nav-link animated" routerLink="/books" routerLinkActive="active tada">Books</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link" routerLink="/book-form/new/0" routerLinkActive="active">New Book</a>
+          <a class="nav-link animated" routerLink="/book-form/new/0" routerLinkActive="active tada">New Book</a>
         </li>
       </ul>
     </div>

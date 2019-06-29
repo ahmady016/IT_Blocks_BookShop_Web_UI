@@ -1,30 +1,32 @@
-<form class="d-flex w-75 mx-auto" [formGroup]="searchForm" (submit)="$event.preventDefault()">
-  <h3 class="w-25">Author List</h3>
-  <input class="form-control form-control-lg w-75" id="authorsQuery" name="authorsQuery" type="search" aria-label="Search"
-    placeholder="Find your author ..." formControlName="authorsQuery" />
-</form>
-<hr />
-<div class="row">
-  <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let author of authorSrv.authors">
-    <div class="card">
-      <div class="card-header flex-around">
-        <a [routerLink]="['/author-form/view/', author.authorId]">
-          <i class="fas fa-user-tie display-3"></i>
-        </a>
-        <div>
-          <h5 class="card-title">
-            <a [routerLink]="['/author-form/view/', author.authorId]">{{ author.authorName }}</a>
-          </h5>
-          <p class="card-text">{{ author.birthDate }}</p>
+<div class="animated zoomInDown">
+  <form class="d-flex w-75 mx-auto" [formGroup]="searchForm" (submit)="$event.preventDefault()">
+    <h3 class="w-25">Author List</h3>
+    <input class="form-control form-control-lg w-75" id="authorsQuery" name="authorsQuery" type="search" aria-label="Search"
+      placeholder="Find your author ..." formControlName="authorsQuery" />
+  </form>
+  <hr />
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor="let author of authorSrv.authors">
+      <div class="card">
+        <div class="card-header flex-around">
+          <a [routerLink]="['/author-form/view/', author.authorId]">
+            <i class="fas fa-user-tie display-3"></i>
+          </a>
+          <div>
+            <h5 class="card-title">
+              <a [routerLink]="['/author-form/view/', author.authorId]">{{ author.authorName }}</a>
+            </h5>
+            <p class="card-text">{{ author.birthDate }}</p>
+          </div>
         </div>
-      </div>
-      <div class="card-footer flex-between text-center">
-        <a [routerLink]="['/author-form/edit/', author.authorId]" class="btn btn-warning d-block">
-          <i class="fas fa-edit"></i> Edit
-        </a>
-        <button class="btn btn-danger" (click)="removeAuthor(author)">
-          <i class="fas fa-trash"></i> Delete
-        </button>
+        <div class="card-footer flex-between text-center">
+          <a [routerLink]="['/author-form/edit/', author.authorId]" class="btn btn-warning d-block">
+            <i class="fas fa-edit"></i> Edit
+          </a>
+          <button class="btn btn-danger" (click)="removeAuthor(author)">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
