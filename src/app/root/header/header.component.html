@@ -1,6 +1,6 @@
 <header>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/books">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark flex-between">
+    <a class="navbar-brand flex-b-20" routerLink="/books">
       <img src="assets/images/books-logo.png" alt="books-logo">
       {{ title }}
     </a>
@@ -8,7 +8,7 @@
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <div class="collapse navbar-collapse flex-b-60" id="navbarText">
       <ul class="nav nav-tabs">
         <li class="nav-item" *ngIf="!authSrv.currentUser">
           <a class="nav-link animated" routerLink="/sign-in" routerLinkActive="active tada">SignIn</a>
@@ -17,21 +17,27 @@
           <a class="nav-link animated" routerLink="/sign-up" routerLinkActive="active tada">SignUp</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
+          <a class="nav-link animated" routerLink="/author-form/new/0" routerLinkActive="active tada">New Author</a>
+        </li>
+        <li class="nav-item" *ngIf="authSrv.currentUser">
           <a class="nav-link animated" routerLink="/authors" routerLinkActive="active tada">Authors</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link animated" routerLink="/author-form/new/0" routerLinkActive="active tada">New Author</a>
+          <a class="nav-link animated" routerLink="/book-form/new/0" routerLinkActive="active tada">New Book</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
           <a class="nav-link animated" routerLink="/books" routerLinkActive="active tada">Books</a>
         </li>
         <li class="nav-item" *ngIf="authSrv.currentUser">
-          <a class="nav-link animated" routerLink="/book-form/new/0" routerLinkActive="active tada">New Book</a>
+          <a class="nav-link animated" routerLink="/books-slider" routerLinkActive="active tada">Books Slider</a>
         </li>
       </ul>
     </div>
-    <div *ngIf="authSrv.currentUser">
-      <span>Welcome, {{ authSrv.currentUser?.email }}</span>
+    <div class="user-info flex-around flex-b-15" *ngIf="authSrv.currentUser">
+      <div class="flex-b-20 text-center">
+        <i class="fas fa-user-tie "></i>
+        {{ authSrv.currentUser?.email }}
+      </div>
       <button class="btn btn-outline-warning"
         (click)="$event.preventDefault();signOut();">
         SignOut

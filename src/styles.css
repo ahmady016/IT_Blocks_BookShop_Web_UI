@@ -175,6 +175,9 @@ div.card .fa-star {
 .form-check-label {
   cursor: pointer;
 }
+.user-info .fas.fa-user-tie {
+  font-size: 1.5rem;
+}
 /* #endregion */
 
 /* #region media query */
