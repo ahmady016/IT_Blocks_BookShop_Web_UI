@@ -29,11 +29,12 @@ export class AuthorListComponent implements OnInit {
 		// build Angular Form
 		this.searchForm = new FormGroup({ ...this.fields });
 		// get all existing authors
-		this.authorSrv.find()
-			.subscribe(
-				console.log,
-				console.log
-			)
+		if(!this.authorSrv.authors.length)
+			this.authorSrv.find()
+				.subscribe(
+					console.log,
+					console.log
+				)
 		// values changes listener
 		this.fields.authorsQuery.valueChanges
 			.pipe(

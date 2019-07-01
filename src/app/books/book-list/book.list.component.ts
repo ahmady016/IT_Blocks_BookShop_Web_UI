@@ -30,11 +30,12 @@ export class BookListComponent implements OnInit {
 		// build Angular Form
 		this.searchForm = new FormGroup({ ...this.fields });
 		// get all existing books
-		this.bookSrv.find()
-			.subscribe(
-				console.log,
-				console.log
-			)
+		if(!this.bookSrv.books.length)
+			this.bookSrv.find()
+				.subscribe(
+					console.log,
+					console.log
+				)
 		// values changes listener
 		this.fields.booksQuery.valueChanges
 			.pipe(
