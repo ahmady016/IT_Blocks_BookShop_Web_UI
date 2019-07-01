@@ -1,0 +1,9 @@
+<ngb-carousel *ngIf="bookSrv.books" class="bg-dark">
+  <ng-template ngbSlide *ngFor="let book of bookSrv.books">
+    <img [src]="book.thumbnailUrl" [alt]="book.title">
+    <div class="carousel-caption">
+      <h3>{{book.title}}</h3>
+      <p>{{book.subtitle}}</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
