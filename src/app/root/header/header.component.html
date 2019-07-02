@@ -1,14 +1,20 @@
 <header>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark flex-between">
-    <a class="navbar-brand flex-b-20" routerLink="/books">
+    <a class="navbar-brand flex-b-15" routerLink="/books">
       <img src="assets/images/books-logo.png" alt="books-logo">
       {{ title }}
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="navItemsToggle()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse flex-b-60" id="navbarText">
+    <div id="navbarText" class="collapse navbar-collapse flex-b-65" [ngClass]="{'show': showNavItems}">
       <ul class="nav nav-tabs">
         <li class="nav-item" *ngIf="!authSrv.currentUser">
           <a class="nav-link animated" routerLink="/sign-in" routerLinkActive="active tada">SignIn</a>
@@ -33,8 +39,8 @@
         </li>
       </ul>
     </div>
-    <div class="user-info flex-around flex-b-15" *ngIf="authSrv.currentUser">
-      <div class="flex-b-20 text-center">
+    <div class="user-info flex-between flex-b-10" *ngIf="authSrv.currentUser">
+      <div class="flex-b-20 text-center mx-1">
         <i class="fas fa-user-tie "></i>
         {{ authSrv.currentUser?.email }}
       </div>
